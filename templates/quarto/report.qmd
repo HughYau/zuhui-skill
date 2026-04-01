@@ -1,7 +1,7 @@
 ---
 title: "Weekly Progress Report"
-author: "{{author}}"
-date: today
+author: "Your Name"
+date: "2026-03-25 to 2026-04-01"
 format:
   html:
     toc: true
@@ -15,29 +15,31 @@ format:
 
 ## Summary
 
-<!-- 1-2句话概括本周整体进展 -->
+This week I validated the mixup direction on CIFAR-10, collected evidence from code and result artifacts, and narrowed down the next experiment choices.
 
 ## Progress
 
-### {{item_1_title}}
+### Experiment A
 
-<!-- 描述、结果、evidence -->
+Tested mixup on CIFAR-10 after last week's meeting. Accuracy improved from 78.3% to 81.7%. Evidence includes commit `abc1234` and `results/example.png`.
 
 <!-- 插入结果图：-->
 <!-- ![实验结果](results/example.png){width=80%} -->
 
-### {{item_2_title}}
+### Reading and Discussion
 
-<!-- ... -->
-
-## Blockers
-
-<!-- 遇到的问题，是否需要帮助 -->
+Read the CutMix paper, summarized three follow-up ideas, and discussed the detection-task extension with a senior labmate.
 
 ## Questions for Advisor
 
-<!-- 需要导师确认/决策的事项 -->
+- Which follow-up direction should go first: adaptive mixup, contrastive learning, or detection?
+- Should we request extra GPU time for the ImageNet run?
+
+## Blockers
+
+- The GPU queue is long, so the ImageNet experiment may be delayed by about a week.
 
 ## Next Steps
 
-<!-- 下周计划 -->
+- Validate the result on an ImageNet subset.
+- Start drafting the related-work section.

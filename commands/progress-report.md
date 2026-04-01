@@ -16,4 +16,5 @@ $ARGUMENTS
 3. 素材收集时同时扫描 git 历史和 artifact 目录
 4. 素材池中 confidence 和 asks 字段要如实反映，不要遗漏
 5. 根据 profile 的导师预设调整详略，对生成内容执行去AI化
-6. 输出后更新 .progress-state.yaml 状态文件
+6. 如果用户要求 experimental 格式，明确提示 experimental 状态，并回退到 markdown 结果
+7. 只有在用户确认本次结果可用后，才更新 `.progress-state.yaml`

@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "active": true,
+  "session_mode": "foreground",
+  "results_path": "research-results.tsv",
+  "state_path": "autoresearch-state.json",
+  "launch_path": null,
+  "runtime_path": null,
+  "updated_at": "2026-04-01T12:50:23Z"
+}

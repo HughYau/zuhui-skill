@@ -1,6 +1,6 @@
 % Progress Report Template (LaTeX)
 % 可直接编译：pdflatex report.tex
-% 用户替换 {{}} 占位符后即可使用
+% 将示例文本替换成你的内容即可使用
 
 \documentclass[11pt,a4paper]{article}
 \usepackage[margin=2.5cm]{geometry}
@@ -12,20 +12,20 @@
 % \usepackage{ctex}
 % \setCJKmainfont{Noto Sans CJK SC}
 
-\title{Weekly Progress Report \\ \large {{period}}}
-\author{{{author}}}
+\title{Weekly Progress Report \\ \large 2026-03-25 to 2026-04-01}
+\author{Your Name}
 \date{}
 
 \begin{document}
 \maketitle
 
 \section{Summary}
-% 1-2句话概括本周整体进展
+This week I validated the mixup direction on CIFAR-10, collected evidence from code and result artifacts, and narrowed down the next experiment choices.
 
 \section{Progress}
 
-\subsection{{{item\_1\_title}}}
-% 描述、结果、evidence
+\subsection{Experiment A}
+Tested mixup on CIFAR-10 after last week's meeting. Accuracy improved from 78.3\% to 81.7\%. Evidence includes commit \texttt{abc1234} and the result figure in \texttt{results/example.png}.
 
 % 插入结果图（取消注释并替换路径）：
 % \begin{figure}[h]
@@ -34,16 +34,22 @@
 %   \caption{实验结果}
 % \end{figure}
 
-\subsection{{{item\_2\_title}}}
-% ...
-
-\section{Blockers}
-% 遇到的问题，是否需要帮助
+\subsection{Reading and Discussion}
+Read the CutMix paper, summarized three follow-up ideas, and discussed the detection-task extension with a senior labmate.
 
 \section{Questions for Advisor}
-% 需要导师确认/决策的事项
+\begin{itemize}[leftmargin=2em]
+  \item Which follow-up direction should go first: adaptive mixup, contrastive learning, or detection?
+  \item Should we request extra GPU time for the ImageNet run?
+\end{itemize}
+
+\section{Blockers}
+The GPU queue is long, so the ImageNet experiment may be delayed by about a week.
 
 \section{Next Steps}
-% 下周计划
+\begin{itemize}[leftmargin=2em]
+  \item Validate the result on an ImageNet subset.
+  \item Start drafting the related-work section.
+\end{itemize}
 
 \end{document}

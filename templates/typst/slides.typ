@@ -9,11 +9,12 @@
 
 = Weekly Progress
 
-{{period}} / {{author}}
+2026-03-25 to 2026-04-01 / Your Name
 
 == This Week
 
-// 要点列表，每项1-2句
+- Mixup outperformed CutMix on CIFAR-10.
+- Reading notes on CutMix gave three concrete follow-up ideas.
 
 // 插入图表：
 // #figure(
@@ -21,14 +22,16 @@
 //   caption: [实验结果],
 // )
 
-== Blockers
-
-// 卡点，是否需要帮助
-
 == Questions
 
-// 需要导师确认的事项
+- Which follow-up direction should go first?
+- Should we request more GPU resources?
+
+== Blockers
+
+- GPU queue is slowing down larger runs.
 
 == Next Steps
 
-// 下周计划
+- Run the ImageNet-subset validation.
+- Start the related-work draft.
