@@ -84,6 +84,7 @@ Full Mode uses:
 For a fuller walkthrough, see:
 - [Getting Started](docs/getting-started.md)
 - [Compatibility](docs/compatibility.md)
+- [Profile Recipes](docs/profile-recipes.md)
 
 ## Samples
 
@@ -91,6 +92,7 @@ If you want to see the end result before configuring anything, start here:
 - [Email sample](samples/example-output-email.md)
 - [Chat sample](samples/example-output-chat.md)
 - [Markdown report sample](samples/example-output-report.md)
+- [Minimal config sample](samples/example-config.minimal.yaml)
 
 The README intentionally links to concrete sample files so users can judge tone and structure before investing time in setup.
 
@@ -106,6 +108,12 @@ Audience and language coverage supported by this repo:
 - zero-config emergency usage and reusable profile-driven usage
 
 Detailed compatibility notes are documented in [docs/compatibility.md](docs/compatibility.md).
+
+## Starter Recipes
+
+If you do not want to design profiles from scratch, use:
+- [Minimal config sample](samples/example-config.minimal.yaml) for the fastest reusable setup
+- [Profile recipes](docs/profile-recipes.md) for advisor, group meeting, collaborator, and bilingual cases
 
 ## Repository Layout
 

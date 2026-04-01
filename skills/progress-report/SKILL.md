@@ -40,6 +40,16 @@ description: |
 
 当存在配置，或用户希望复用 profile、跟踪周期、扫描 artifact 时，走完整工作流。
 
+## 首用默认策略
+
+除非用户明确要求搭完整配置，否则优先让用户更快得到可用结果：
+- 没有 `.progress-config.yaml` 时，默认先走 Quick Mode
+- Quick Mode 结束后，再提示是否迁移到可复用配置
+- 如果用户想要“能直接复制的配置”，优先给出 `samples/example-config.minimal.yaml`
+- 如果用户说不清 profile 怎么配，优先从 `docs/profile-recipes.md` 里选最接近的沟通场景
+
+这样做的目标是降低首次使用成本，而不是一开始就让用户理解全部配置字段
+
 ## 工作流（Full Mode）
 
 ### Step 0: 加载配置和状态
@@ -204,6 +214,17 @@ progress_pool:
 V1 只正式暴露 `email`、`chat`、`markdown`。
 `typst`、`latex`、`quarto` 模板在 `templates/` 下作为 experimental 预留。
 如果用户要求 experimental 格式，要明确提示当前状态，并回退到 `markdown` 结果。
+
+## 常见适配场景
+
+优先覆盖这些高频场景：
+- 主导师周报：`email` + `detail-oriented`
+- 组会汇报：`markdown` + `high-level`
+- 快速同步：`chat` + `hands-off`
+- 英文协作者：`email` 或 `chat` + `en`
+- 中英混合沟通：`bilingual`
+
+如果用户只是说“帮我配一个常用模板”，优先推荐上面最接近的组合，不要让用户从空白开始想
 
 ## References
 
