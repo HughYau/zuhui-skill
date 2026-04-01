@@ -100,28 +100,16 @@ For a fuller walkthrough, see:
 
 The preferred setup is **project-local**, not global.
 
-Recommended layout:
+The generic install only needs three things:
+1. Keep this repo inside the project you want to report on, or inside a dedicated reporting workspace.
+2. Keep `.progress-config.yaml` and `.progress-state.yaml` in that same project or workspace root.
+3. Make sure the AI reads:
+   - `commands/progress-report.md`
+   - `skills/progress-report/SKILL.md`
 
-```text
-your-research-project/
-├── .progress-config.yaml
-├── .progress-state.yaml
-├── tools/
-│   └── progress-report-skill/
-├── results/
-├── notebooks/
-└── notes/
-```
+There is no required folder name. `progress-report-skill/`, `tools/progress-report-skill/`, and `.ai/skills/progress-report/` are all acceptable as long as the repo stays local to the reporting context.
 
 This matters because the AI can read the actual git history, figures, notebooks, and notes from the project, while the state and config stay tied to the correct reporting context.
-
-The same integration pattern can be reused across Codex, Claude Code, OpenCode, and similar AI tools:
-1. Put this repo inside the project, for example under `tools/progress-report-skill/`
-2. Ask the AI to read:
-   - `tools/progress-report-skill/commands/progress-report.md`
-   - `tools/progress-report-skill/skills/progress-report/SKILL.md`
-3. Create `.progress-config.yaml` in the project root
-4. Keep `.progress-state.yaml` in the same project root
 
 See [docs/installation.md](docs/installation.md) for the full version.
 
@@ -133,12 +121,13 @@ If you want an AI agent to install the skill for you, copy this block as-is:
 Please install the progress-report skill into this project as a project-local tool, not as a global install.
 
 Requirements:
-1. Put the skill under `tools/progress-report-skill/` in the current project, or reuse that path if it already exists.
+1. Keep the skill repo local to this project or workspace. The exact folder name is not important.
 2. Read and follow:
-   - `tools/progress-report-skill/commands/progress-report.md`
-   - `tools/progress-report-skill/skills/progress-report/SKILL.md`
-3. Create `.progress-config.yaml` in the project root using the minimal sample unless a richer config is clearly needed.
-4. Keep `.progress-state.yaml` in the same project root.
+   - `commands/progress-report.md`
+   - `skills/progress-report/SKILL.md`
+   If the repo is placed in a subfolder, use the correct prefixed paths.
+3. Create `.progress-config.yaml` in the project or workspace root using the minimal sample unless a richer config is clearly needed.
+4. Keep `.progress-state.yaml` in the same root.
 5. Assume this project-local install should work for Codex, Claude Code, OpenCode, and similar AI coding tools.
 6. Do not install anything globally unless I explicitly ask.
 

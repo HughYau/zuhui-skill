@@ -91,28 +91,16 @@
 
 推荐方式不是全局安装，而是**项目内安装**。
 
-最推荐的目录结构如下：
+通用安装其实只需要满足三件事：
+1. 把这个仓库放在你要汇报的项目里，或者放在一个单独的汇报 workspace 里。
+2. 把 `.progress-config.yaml` 和 `.progress-state.yaml` 放在同一个项目或 workspace 根目录。
+3. 让 AI 读取：
+   - `commands/progress-report.md`
+   - `skills/progress-report/SKILL.md`
 
-```text
-your-research-project/
-├── .progress-config.yaml
-├── .progress-state.yaml
-├── tools/
-│   └── progress-report-skill/
-├── results/
-├── notebooks/
-└── notes/
-```
+这里没有强制目录名。`progress-report-skill/`、`tools/progress-report-skill/`、`.ai/skills/progress-report/` 都可以，本质上只要是**项目本地可读**即可。
 
 这样做的原因很直接：AI 可以直接读到当前项目的 git 历史、结果图、notebook 和笔记，状态文件也不会和别的项目串掉。
-
-Codex、Claude Code、OpenCode 以及其他能读取项目文件的 AI 工具，都可以复用同一套接入方式：
-1. 把本仓库放到项目里，例如 `tools/progress-report-skill/`
-2. 让 AI 读取：
-   - `tools/progress-report-skill/commands/progress-report.md`
-   - `tools/progress-report-skill/skills/progress-report/SKILL.md`
-3. 在项目根目录创建 `.progress-config.yaml`
-4. 后续在同一个项目根目录维护 `.progress-state.yaml`
 
 完整说明见 [docs/installation.md](docs/installation.md)。
 
@@ -124,12 +112,13 @@ Codex、Claude Code、OpenCode 以及其他能读取项目文件的 AI 工具，
 请把 progress-report skill 安装到当前项目里，按项目级工具处理，不要做全局安装。
 
 要求：
-1. 将 skill 放到 `tools/progress-report-skill/`，如果该目录已存在则复用。
+1. 将 skill 保持为当前项目或当前 workspace 的本地工具，不要做全局安装，目录名不重要。
 2. 读取并遵循：
-   - `tools/progress-report-skill/commands/progress-report.md`
-   - `tools/progress-report-skill/skills/progress-report/SKILL.md`
-3. 在项目根目录创建 `.progress-config.yaml`，默认优先使用 minimal sample，除非当前项目明显需要完整配置。
-4. 将 `.progress-state.yaml` 也放在项目根目录。
+   - `commands/progress-report.md`
+   - `skills/progress-report/SKILL.md`
+   如果仓库被放在子目录里，请使用带前缀的正确路径。
+3. 在项目或 workspace 根目录创建 `.progress-config.yaml`，默认优先使用 minimal sample，除非当前项目明显需要完整配置。
+4. 将 `.progress-state.yaml` 也放在同一个根目录。
 5. 这套安装方式需要兼容 Codex、Claude Code、OpenCode 以及类似的 AI 工具。
 6. 除非我明确要求，否则不要全局安装。
 
