@@ -246,6 +246,8 @@ leaf_hints:
 - `references/anti-ai-en.md` — `language=en` 或 `bilingual`
 - `references/style-extraction.md` — 配置了风格样本时
 - `references/artifact-scanning.md` — 配置了 artifact 扫描时
+- `samples/example-config.minimal.yaml` — 首次使用引导时
+- `docs/profile-recipes.md` — 用户不确定如何配 profile 时
 
 ## Edge Cases
 

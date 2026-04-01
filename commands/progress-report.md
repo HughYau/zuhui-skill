@@ -21,3 +21,17 @@ $ARGUMENTS
 8. 如果用户要求 experimental 格式，明确提示 experimental 状态，并回退到 markdown 结果
 9. 如果没有 git 历史、没有 artifact 目录、或主要进展来自口述，不要把这些情况当成失败；应降级为可用路径继续生成
 10. 只有在用户确认本次结果可用后，才更新 `.progress-state.yaml`
+
+常用参数：
+- `--profile`：使用指定 profile
+- `--format`：`email | chat | markdown`
+- `--layout`：`report | slides`
+- `--verbosity`：`brief | standard | detailed`
+- `--language`：`zh | en | bilingual`
+- `--since`：覆盖默认时间范围
+- `--quick`：强制 Quick Mode
+
+experimental 说明：
+- `typst`、`latex`、`quarto` 仍是 experimental 路径
+- 其中 Typst slides 模板当前依赖 `@preview/touying:0.5.5`
+- 默认稳定路径仍然是先生成 markdown 内容

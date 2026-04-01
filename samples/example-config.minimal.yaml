@@ -30,6 +30,7 @@ artifacts:
     - results/
     - notebooks/
     - notes/
+    # Intentionally minimal: add data/ only if generated tables or processed outputs are a real reporting source.
   file_patterns:
     - "*.png"
     - "*.ipynb"

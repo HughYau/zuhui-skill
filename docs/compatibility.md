@@ -29,6 +29,10 @@ The expected behavior for experimental requests is:
 2. generate the markdown content first
 3. optionally adapt that content into the template afterward
 
+Current compile-time note:
+- `templates/typst/slides.typ` depends on `@preview/touying:0.5.5`
+- this is a template dependency, not part of the stable markdown-first path
+
 ## Language coverage
 
 The skill is designed for:

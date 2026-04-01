@@ -90,7 +90,8 @@ For a fuller walkthrough, see:
 ## Samples
 
 If you want to see the end result before configuring anything, start here:
-- [Email sample](samples/example-output-email.md)
+- [Email sample (Chinese)](samples/example-output-email-zh.md)
+- [Email sample (English)](samples/example-output-email-en.md)
 - [Chat sample](samples/example-output-chat.md)
 - [Markdown report sample](samples/example-output-report.md)
 - [Minimal config sample](samples/example-config.minimal.yaml)

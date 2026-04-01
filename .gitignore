@@ -1,0 +1,29 @@
+# External or unrelated local skill bundles
+.agents/
+
+# Local runs while testing the skill inside this repo
+.progress-config.yaml
+.progress-state.yaml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+
+# LaTeX build artifacts
+*.aux
+*.log
+*.out
+*.synctex.gz
+*.fls
+*.fdb_latexmk
+*.toc
+*.nav
+*.snm
+*.vrb

@@ -44,7 +44,7 @@
 - Read the CutMix paper and wrote down three follow-up ideas.
 - Discussed detection-task extensions with a senior labmate.
 
-= Questions for Advisor
+= Questions
 
 - Which direction should we prioritize next: adaptive mixup, contrastive learning, or detection?
 - Do we need to request extra GPU time for the ImageNet run?

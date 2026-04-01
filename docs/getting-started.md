@@ -81,7 +81,8 @@ The generated result should always make these items easy to scan:
 - next steps
 
 Example outputs:
-- [Email sample](../samples/example-output-email.md)
+- [Email sample (Chinese)](../samples/example-output-email-zh.md)
+- [Email sample (English)](../samples/example-output-email-en.md)
 - [Chat sample](../samples/example-output-chat.md)
 - [Markdown report sample](../samples/example-output-report.md)
 

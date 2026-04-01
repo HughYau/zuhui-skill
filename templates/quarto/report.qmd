@@ -30,7 +30,7 @@ Tested mixup on CIFAR-10 after last week's meeting. Accuracy improved from 78.3%
 
 Read the CutMix paper, summarized three follow-up ideas, and discussed the detection-task extension with a senior labmate.
 
-## Questions for Advisor
+## Questions
 
 - Which follow-up direction should go first: adaptive mixup, contrastive learning, or detection?
 - Should we request extra GPU time for the ImageNet run?
