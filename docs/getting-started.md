@@ -84,3 +84,5 @@ Example outputs:
 - [Email sample](../samples/example-output-email.md)
 - [Chat sample](../samples/example-output-chat.md)
 - [Markdown report sample](../samples/example-output-report.md)
+
+If you hit an edge case, check [FAQ](faq.md) before expanding the config.

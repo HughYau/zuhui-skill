@@ -85,6 +85,7 @@ For a fuller walkthrough, see:
 - [Getting Started](docs/getting-started.md)
 - [Compatibility](docs/compatibility.md)
 - [Profile Recipes](docs/profile-recipes.md)
+- [FAQ](docs/faq.md)
 
 ## Samples
 

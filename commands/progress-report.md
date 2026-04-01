@@ -19,4 +19,5 @@ $ARGUMENTS
 6. 根据 profile 的导师预设调整详略，对生成内容执行去AI化
 7. 如果用户不确定怎么配 profile，优先参考 `docs/profile-recipes.md` 中最接近的场景，而不是让用户从空白配置开始
 8. 如果用户要求 experimental 格式，明确提示 experimental 状态，并回退到 markdown 结果
-9. 只有在用户确认本次结果可用后，才更新 `.progress-state.yaml`
+9. 如果没有 git 历史、没有 artifact 目录、或主要进展来自口述，不要把这些情况当成失败；应降级为可用路径继续生成
+10. 只有在用户确认本次结果可用后，才更新 `.progress-state.yaml`
