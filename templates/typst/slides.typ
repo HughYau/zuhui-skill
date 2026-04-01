@@ -1,4 +1,5 @@
 // Progress Slides Template (Typst + Touying)
+// Template id: lab-slides
 // 需要 touying 包：typst compile slides.typ
 // experimental — 基本结构可用，样式待打磨
 

@@ -12,6 +12,7 @@ layout: report
 advisor_preset: detail-oriented
 verbosity: standard
 language: zh
+tone: neutral
 ```
 
 Best for:
@@ -28,6 +29,7 @@ layout: slides
 advisor_preset: high-level
 verbosity: standard
 language: zh
+tone: triumphant
 ```
 
 Best for:
@@ -44,6 +46,7 @@ layout: report
 advisor_preset: hands-off
 verbosity: brief
 language: zh
+tone: struggling
 ```
 
 Best for:
@@ -62,6 +65,7 @@ layout: report
 advisor_preset: intuitive
 verbosity: standard
 language: en
+tone: neutral
 ```
 
 Best for:
@@ -78,11 +82,34 @@ layout: report
 advisor_preset: high-level
 verbosity: standard
 language: bilingual
+tone: neutral
 ```
 
 Best for:
 - situations where you need one reusable draft for both Chinese and English contexts
 - internal note taking before rewriting into a final outward-facing message
+
+## Lab lingo heavy workflow
+
+Recommended settings:
+
+```yaml
+format: email
+layout: report
+advisor_preset: detail-oriented
+verbosity: standard
+language: zh
+tone: neutral
+vocabulary:
+  - concept: "run experiments"
+    preferred: "炼丹"
+  - concept: "ablation study"
+    preferred: "控制变量"
+```
+
+Best for:
+- labs with strong internal jargon
+- advisors who expect familiar wording rather than textbook phrasing
 
 ## How to choose
 

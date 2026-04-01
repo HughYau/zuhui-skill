@@ -1,0 +1,42 @@
+---
+title: "Thesis Progress Note"
+author: "Your Name"
+date: "2026-03-25 to 2026-04-01"
+template-id: "thesis-status"
+format:
+  html:
+    toc: true
+  pdf:
+    documentclass: report
+    geometry: margin=2.6cm
+---
+
+## Current Thesis Focus
+
+Main problem: robust data augmentation for small-sample image classification. Current chapter tie-in: methodology and evaluation design.
+
+## Completed Since Last Report
+
+### Experiments
+
+Re-ran the mixup baseline with a fixed seed set and confirmed the earlier gain was reproducible on three random seeds. Evidence includes commit `abc1234` and `results/reproducibility.csv`.
+
+### Writing
+
+Drafted a one-page note on evaluation protocol changes and cleaned up the thesis outline for the methods chapter.
+
+## Risk Register
+
+- The current result is still on CIFAR-10 only.
+- ImageNet-subset validation is blocked by GPU queue time.
+
+## Decisions Needed
+
+- Should the next chapter focus on augmentation first or move to representation learning?
+- Is a negative result section worth keeping in the thesis structure?
+
+## Next Milestones
+
+- Run the ImageNet-subset validation.
+- Turn the evaluation note into a thesis subsection draft.
+- Prepare one figure that compares all augmentation variants side by side.

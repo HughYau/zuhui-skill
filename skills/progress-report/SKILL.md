@@ -18,13 +18,45 @@ description: |
 
 关键词：组会、汇报、进展、weekly report、progress update、advisor、导师
 
-## 不适用场景
 
-- 论文写作（用 `paper-write`）
-- 投稿或审稿邮件（用 `cover-letter`）
-- 纯代码 review（用 `code-reviewer`）
+## 三种入口
 
-## 两种模式
+### Interactive Init
+
+当用户传了 `--init`，或明确说“帮我配一个 `.progress-config.yaml` / 初始化配置 / 做 onboarding”，先不要急着生成汇报，优先完成配置向导。
+
+目标：
+- 把“第一次上手”的负担压到最低
+- 用对话式提问替代让用户手写 YAML
+- 最终直接产出可用的 `.progress-config.yaml`
+
+向导规则：
+1. 总问题数控制在 5-7 个，优先问高价值信息
+2. 尽量用用户语言提问，不把问题写成配置字段考试
+3. 如果用户回答模糊，做合理默认并明确说明
+4. 如果仓库里已经有 `.progress-config.yaml`，不要静默覆盖；先读取现有配置，再生成 merge 建议或新 profile
+5. 向导结束后给出：
+   - 推荐 profile 名
+   - 生成的 `.progress-config.yaml`
+   - 为什么这样配置的简短解释
+
+建议问题顺序：
+1. 你最常汇报给谁，还是主要用于组会/协作同步？
+2. 对方更喜欢看细节、结论，还是需要你把思路讲清楚？
+3. 你平时更常用中文、英文，还是要双语底稿？
+4. 你最常发邮件、聊天消息，还是做文档/幻灯片？
+5. 你组里有没有固定黑话或偏好的术语？
+6. 你最近汇报时更常见的语气是稳健中性、卡壳求助，还是突破汇报？
+7. 项目里哪些目录最可能出现结果图、notebook、笔记或表格？
+
+向导生成的最小配置至少应包含：
+- `default_profile`
+- 一个可用的 `profiles.<name>`
+- `tone`
+- `vocabulary`
+- `repos`
+- `artifacts.scan_dirs`
+- `render`（如果用户需要文档导出）
 
 ### Quick Mode
 
@@ -45,6 +77,7 @@ description: |
 除非用户明确要求搭完整配置，否则优先让用户更快得到可用结果：
 - 没有 `.progress-config.yaml` 时，默认先走 Quick Mode
 - Quick Mode 结束后，再提示是否迁移到可复用配置
+- 如果用户明确想要长期复用工作流，优先建议 `/progress-report --init`
 - 如果用户想要“能直接复制的配置”，优先给出 `samples/example-config.minimal.yaml`
 - 如果用户说不清 profile 怎么配，优先从 `docs/profile-recipes.md` 里选最接近的沟通场景
 
@@ -59,10 +92,64 @@ description: |
 - `.progress-state.yaml`：上次汇报时间、commit 范围、历史记录
 
 规则：
-- 配置不存在：进入首次配置向导，或降级到 Quick Mode
+- 配置不存在：如果用户明确要初始化或长期复用，进入首次配置向导；否则降级到 Quick Mode
 - 状态不存在：创建空状态文件，默认从最近一周开始
 - `--profile` 优先于 `default_profile`
-- 命令行参数可覆盖 profile 中的 `format`、`layout`、`verbosity`、`language`
+- 命令行参数可覆盖 profile 中的 `format`、`layout`、`verbosity`、`language`、`tone`、`render`
+
+推荐配置结构：
+
+```yaml
+language: zh
+
+profiles:
+  weekly-email:
+    audience: "张老师"
+    advisor_preset: detail-oriented
+    format: email
+    layout: report
+    verbosity: standard
+    language: zh
+    tone: neutral
+    vocabulary:
+      - concept: "run experiments"
+        preferred: "跑实验"
+      - concept: "ablation study"
+        preferred: "控制变量"
+    signature:
+      name: ""
+      closing: "祝好"
+
+default_profile: weekly-email
+
+tone: neutral
+
+vocabulary: []
+
+style:
+  sample_files: []
+  style_summary: null
+
+repos:
+  - path: .
+
+artifacts:
+  scan_dirs: [results/, notebooks/, notes/]
+  file_patterns: ["*.png", "*.ipynb", "*.md"]
+
+render:
+  enabled: auto
+  format: markdown
+  template: classic-report
+  compile: auto
+```
+
+字段说明：
+- `tone`：默认语气控制。可选 `neutral | struggling | triumphant`
+- `vocabulary`：术语偏好表。优先使用 `preferred`，避免泛化成过于标准的 AI 套话
+- `render.format`：文档导出目标，可选 `markdown | typst | latex | quarto`
+- `render.template`：模板名，例如 `classic-report | thesis-status | lab-slides`
+- `render.compile`：`auto | always | never`
 
 ### Step 1: 素材收集
 
@@ -156,6 +243,14 @@ progress_pool:
 - 不夸大结果。单次实验不写“显著提升”，小数据集不写“证明”
 - `asks` 和 `decisions_needed` 放在容易看到的位置，不要埋到结尾
 
+词汇与语气控制同样是硬约束：
+- 如果配置了 `vocabulary`，优先使用用户提供的实验室/导师黑话
+- 同一份输出中，术语要前后一致，不要一会儿写 “ablation study” 一会儿写 “控制变量”
+- 如果术语可能让外部合作者不理解，应根据 audience 做最小必要解释，而不是机械照搬
+- `tone=struggling`：语气可以更委婉，突出卡点、尝试过的路径、希望对方给的帮助
+- `tone=triumphant`：重点突出关键突破、证据、影响面，但禁止夸大和抢结论
+- `tone=neutral`：保持事实先行，少修辞
+
 按格式组织输出：
 
 | 格式 | 结构 |
@@ -164,6 +259,8 @@ progress_pool:
 | `chat` | 一句话开头 → 要点 → 卡点或求助 → 下一步 |
 | `markdown report` | 标题 → progress → questions → blockers → next steps |
 | `markdown slides` | 每个主题一页，最后一页放 questions 和 next steps |
+| `typst/latex/quarto report` | 先产出 markdown 版结构，再映射到文档模板 |
+| `typst/latex/quarto slides` | 先产出 markdown slides 结构，再映射到幻灯片模板 |
 
 ### Step 3: 去 AI 化和风格适配
 
@@ -192,6 +289,27 @@ progress_pool:
 - 切换到另一个 profile 重新生成
 - 输出到文件
 
+如果用户请求 `typst`、`latex` 或 `quarto`：
+1. 先生成稳定的 markdown 内容
+2. 按 `render.template` 选择模板并生成源码
+3. 检测本地环境：
+   - Typst: `typst --version`
+   - LaTeX: `pdflatex --version`
+   - Quarto: `quarto --version`
+4. 若 `render.compile != never` 且环境存在，则尝试本地编译
+5. 若编译成功，返回源码路径和 PDF 路径
+6. 若编译失败，返回：
+   - markdown 内容
+   - 模板源码
+   - 失败原因摘要
+   - 用户下一步可执行的修复建议
+
+编译策略：
+- `classic-report`：最稳健的单页/短报告模板，优先用于 smoke test
+- `thesis-status`：更接近 thesis/progress note 的章节结构
+- `lab-slides`：组会幻灯片模板
+- 对中文内容，如果编译环境缺少 CJK 字体或宏包，不要伪装成成功；要明确指出缺的依赖
+
 只有在用户确认本次结果可用之后，才更新 `.progress-state.yaml`：
 - `last_report_at`
 - `last_report_range`
@@ -202,18 +320,25 @@ progress_pool:
 
 ```text
 /progress-report [options]
+  --init      交互式初始化并生成 .progress-config.yaml
   --profile   使用指定的沟通 profile
-  --format    email | chat | markdown
+  --format    email | chat | markdown | typst | latex | quarto
   --layout    report | slides
+  --template  classic-report | thesis-status | lab-slides
   --verbosity brief | standard | detailed
   --language  zh | en | bilingual
   --since     时间范围，如 "last monday", "2 weeks ago"
+  --tone      neutral | struggling | triumphant
   --quick     强制 Quick Mode
+  --no-compile 请求文档格式时仅生成源码，不尝试编译
 ```
 
-V1 只正式暴露 `email`、`chat`、`markdown`。
-`typst`、`latex`、`quarto` 模板在 `templates/` 下作为 experimental 预留。
-如果用户要求 experimental 格式，要明确提示当前状态，并回退到 `markdown` 结果。
+稳定输出仍以 `email`、`chat`、`markdown` 为主。
+`typst`、`latex`、`quarto` 走增强后的文档导出路径：
+- 允许直接请求
+- 默认先生成 markdown
+- 有环境时尝试编译到 PDF
+- 无环境或失败时回退到 markdown + 源码，而不是只给一句 experimental 提示
 
 ## 常见适配场景
 
@@ -223,6 +348,8 @@ V1 只正式暴露 `email`、`chat`、`markdown`。
 - 快速同步：`chat` + `hands-off`
 - 英文协作者：`email` 或 `chat` + `en`
 - 中英混合沟通：`bilingual`
+- 想长期复用又不想手写配置：`--init`
+- 想要正式 PDF：`typst` 或 `latex` 的 `classic-report`
 
 如果用户只是说“帮我配一个常用模板”，优先推荐上面最接近的组合，不要让用户从空白开始想
 
@@ -253,14 +380,10 @@ leaf_hints:
 
 - 无 git 历史：跳过 git 分析，用 artifact 扫描和口述补足
 - 无配置文件：进入 Quick Mode 或首次配置向导
+- 用户要求初始化：优先 `--init`，而不是先逼用户读配置字段
 - 无风格样本：跳过风格适配，仅做去 AI 化
 - 无状态文件：创建新状态，默认从最近一周开始
 - 素材和上次汇报重叠：提示用户，标记重叠部分让用户决定是否保留
-- 用户要求 experimental 格式：提示状态并 fallback 到 markdown
+- 用户要求文档格式但本地无编译环境：返回 markdown + 模板源码 + 安装提示
+- 用户要求文档格式且编译失败：返回失败摘要，不要伪装成 PDF 已生成
 - 素材全部 `confidence=preliminary`：在输出开头加一句明确提示
-
-## 与其他 skill 的关系
-
-- `paper-write`：论文写作用 `paper-write`，进展汇报用本 skill
-- `humanizer-zh` / `humanizer`：去 AI 化模块引用其规则体系
-- `ppw-cover-letter`：投稿 cover letter 用对应 skill，日常汇报用本 skill

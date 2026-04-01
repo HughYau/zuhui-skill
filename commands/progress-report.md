@@ -11,27 +11,36 @@ description: |
 $ARGUMENTS
 
 输出要求：
-1. 如果用户传了 --quick 或没有配置文件，走 Quick Mode（只问三个问题，立即生成）
-2. 用户是首次使用且没有明确要求复杂配置时，优先选择最低心智负担路径：先完成 Quick Mode，再提示可迁移到最小配置样例 `samples/example-config.minimal.yaml`
-3. 否则按 Full Mode 工作流执行（配置→素材收集→内容生成→输出）
-4. 素材收集时同时扫描 git 历史和 artifact 目录
-5. 素材池中 confidence 和 asks 字段要如实反映，不要遗漏
-6. 根据 profile 的导师预设调整详略，对生成内容执行去AI化
-7. 如果用户不确定怎么配 profile，优先参考 `docs/profile-recipes.md` 中最接近的场景，而不是让用户从空白配置开始
-8. 如果用户要求 experimental 格式，明确提示 experimental 状态，并回退到 markdown 结果
-9. 如果没有 git 历史、没有 artifact 目录、或主要进展来自口述，不要把这些情况当成失败；应降级为可用路径继续生成
-10. 只有在用户确认本次结果可用后，才更新 `.progress-state.yaml`
+1. 如果用户传了 `--init`，进入 Interactive Init：用聊天方式完成 5-7 个低负担问题，并生成或更新 `.progress-config.yaml`
+2. 如果用户传了 `--quick`，或没有配置文件且用户只是想先出一版结果，走 Quick Mode（只问三个问题，立即生成）
+3. 用户是首次使用且没有明确要求复杂配置时，优先选择最低心智负担路径：先完成 Quick Mode，再提示可迁移到最小配置样例 `samples/example-config.minimal.yaml`
+4. 否则按 Full Mode 工作流执行（配置→素材收集→内容生成→导出/输出）
+5. 素材收集时同时扫描 git 历史和 artifact 目录
+6. 素材池中 `confidence`、`asks`、`decisions_needed` 字段要如实反映，不要遗漏
+7. 根据 profile 的导师预设调整详略，并应用 `vocabulary` 与 `tone` 约束后再执行去AI化
+8. 如果用户不确定怎么配 profile，优先参考 `docs/profile-recipes.md` 中最接近的场景，而不是让用户从空白配置开始
+9. 如果用户要求 `typst`、`latex`、`quarto`，先生成 markdown 内容，再生成对应模板源码；若本地检测到编译环境，则自动尝试编译并反馈 PDF 结果或报错摘要
+10. 如果没有 git 历史、没有 artifact 目录、或主要进展来自口述，不要把这些情况当成失败；应降级为可用路径继续生成
+11. 只有在用户确认本次结果可用后，才更新 `.progress-state.yaml`
 
 常用参数：
 - `--profile`：使用指定 profile
-- `--format`：`email | chat | markdown`
+- `--format`：`email | chat | markdown | typst | latex | quarto`
 - `--layout`：`report | slides`
+- `--template`：覆盖默认导出模板，例如 `classic-report | thesis-status | lab-slides`
 - `--verbosity`：`brief | standard | detailed`
 - `--language`：`zh | en | bilingual`
 - `--since`：覆盖默认时间范围
+- `--tone`：`neutral | struggling | triumphant`
+- `--init`：启动交互式初始化向导并生成配置
 - `--quick`：强制 Quick Mode
+- `--no-compile`：请求文档格式时只生成源码，不尝试本地编译
 
-experimental 说明：
-- `typst`、`latex`、`quarto` 仍是 experimental 路径
-- 其中 Typst slides 模板当前依赖 `@preview/touying:0.5.5`
-- 默认稳定路径仍然是先生成 markdown 内容
+文档导出说明：
+- `typst`、`latex`、`quarto` 走 markdown-first 导出路径：先稳定生成内容，再映射到模板源码
+- 若检测到相应环境，可尝试编译：
+  - `typst compile`
+  - `pdflatex`
+  - `quarto render`
+- Typst slides 模板当前依赖 `@preview/touying:0.5.5`
+- 如果环境缺失、模板编译失败或用户显式传入 `--no-compile`，默认返回 markdown + 对应模板源码

@@ -12,24 +12,26 @@
 3. 素材池增加 confidence、asks、decisions_needed 字段，支持事实校验
 4. 单 advisor 升级为多沟通 profile，覆盖主导师/联导/组会/协作者
 5. Quick Mode 零配置应急路径，降低首次使用门槛
-6. Typst/LaTeX/Quarto 标为 experimental，V1 参数只暴露已实现格式
+6. 增加 `--init` 交互式初始化，降低首次配置门槛
+7. 支持 `tone` 与 `vocabulary`，让输出贴合导师/实验室语境
+8. Typst/LaTeX/Quarto 升级为 markdown-first 文档导出路径，并在环境可用时尝试本地编译
 
 ---
 
 ## 1. Skill 概览
 
 - **名称**: `progress-report`
-- **架构**: 单一 skill，两种模式（Quick / Full）
-- **三大场景**: 邮件正文、即时消息（微信/Slack/Teams）、文档（Markdown + experimental Typst/LaTeX/Quarto）
-- **核心特性**: 多沟通 profile、周期状态跟踪、artifact 扫描、事实校验/求助点、双语去AI化、个人风格保持
+- **架构**: 单一 skill，三种入口（Init / Quick / Full）
+- **三大场景**: 邮件正文、即时消息（微信/Slack/Teams）、文档（Markdown + Typst/LaTeX/Quarto 导出）
+- **核心特性**: 多沟通 profile、周期状态跟踪、artifact 扫描、事实校验/求助点、双语去AI化、个人风格保持、术语词典、语气控制
 
 ## 2. 整体架构
 
 ```
-Quick Mode:               Full Mode:
-3个问题 → 生成 → 完成      Step 0: 配置+状态 → Step 1: 素材收集(git+artifact+口述)
-                           → Step 2: 内容生成(profile适配+事实校验)
-                           → Step 3: 去AI化+风格 → Step 4: 输出+状态更新
+Init Mode:                Quick Mode:               Full Mode:
+5-7个问题 → 生成配置        3个问题 → 生成 → 完成      Step 0: 配置+状态 → Step 1: 素材收集(git+artifact+口述)
+                                                     → Step 2: 内容生成(profile适配+事实校验+tone/vocabulary)
+                                                     → Step 3: 去AI化+风格 → Step 4: 导出/输出+状态更新
 ```
 
 核心思路：**进展素材与输出格式解耦**，同时**跟踪汇报周期防止漏报重报**。
@@ -45,6 +47,10 @@ Quick Mode:               Full Mode:
 
 ```yaml
 language: zh
+tone: neutral
+vocabulary:
+  - concept: "ablation study"
+    preferred: "控制变量"
 
 profiles:
   weekly-email:
@@ -54,6 +60,7 @@ profiles:
     layout: report
     verbosity: standard
     language: zh
+    tone: neutral
     signature: {name: "", closing: "祝好"}
 
   group-meeting:
@@ -81,6 +88,12 @@ repos:
 artifacts:
   scan_dirs: [results/, notebooks/, notes/, data/]
   file_patterns: ["*.png", "*.csv", "*.ipynb", "*.md"]
+
+render:
+  enabled: auto
+  format: markdown
+  template: classic-report
+  compile: auto
 ```
 
 ### 3.3 状态文件核心结构
@@ -170,15 +183,15 @@ progress_pool:
 | `chat` | 微信/Slack/Teams |
 | `markdown` | 组会展示或存档（report + slides） |
 
-### 6.2 Experimental 格式
+### 6.2 文档导出格式
 
 | 格式 | 状态 | 模板 |
 |------|------|------|
-| `typst` | experimental，可编译，支持插图 | `templates/typst/` |
-| `latex` | experimental，可编译，支持插图 | `templates/latex/` |
-| `quarto` | experimental，可编译，支持插图 | `templates/quarto/` |
+| `typst` | markdown-first，可在有环境时编译，支持插图 | `templates/typst/` |
+| `latex` | markdown-first，可在有环境时编译，支持插图 | `templates/latex/` |
+| `quarto` | markdown-first，可在有环境时编译，支持插图 | `templates/quarto/` |
 
-使用 experimental 格式时提示状态，fallback 到 markdown。
+使用这些格式时先生成 markdown，再映射到模板源码，并在环境可用时尝试编译。
 模板均已支持基本结构、中文注释、figure 插入位。
 Typst slides 当前依赖 `@preview/touying:0.5.5`，应在面向用户的文档里明确说明这一点。
 
@@ -208,9 +221,9 @@ zuhui-skill/
 │       ├── style-extraction.md
 │       └── artifact-scanning.md
 ├── templates/
-│   ├── typst/    (report.typ, slides.typ)
-│   ├── latex/    (report.tex, slides.tex)
-│   └── quarto/   (report.qmd, slides.qmd)
+│   ├── typst/    (report.typ, thesis-status.typ, slides.typ)
+│   ├── latex/    (report.tex, thesis-status.tex, slides.tex)
+│   └── quarto/   (report.qmd, thesis-status.qmd, slides.qmd)
 ├── commands/
 │   └── progress-report.md
 ├── samples/
@@ -224,6 +237,7 @@ zuhui-skill/
 ├── docs/
 │   ├── getting-started.md
 │   ├── compatibility.md
+│   ├── export-workflows.md
 │   ├── profile-recipes.md
 │   └── faq.md
 └── README.md
@@ -234,6 +248,12 @@ zuhui-skill/
 - `.progress-state.yaml`
 
 ## 8. 交互流程
+
+### Init Mode（首次配置）
+1. `/progress-report --init`
+2. 问 5-7 个 onboarding 问题
+3. 自动生成 `.progress-config.yaml`
+4. 若已有配置，则优先 merge 或新增 profile，而不是静默覆盖
 
 ### Quick Mode（应急）
 1. `/progress-report --quick` 或首次无配置时
@@ -259,5 +279,6 @@ zuhui-skill/
 4. **Confidence 标注测试**: 素材含 preliminary 结论时，输出中有明确标记
 5. **多 Profile 测试**: 同一素材，切换 weekly-email 和 quick-sync profile，对比输出
 6. **去AI化测试**: 生成后检查无 AI 高频模式
-7. **Experimental 格式测试**: 请求 typst 格式时提示 experimental，模板可编译
-8. **端到端测试**: git + artifact + 口述 → 完整汇报，Quick Mode < 1分钟，Full Mode < 3分钟
+7. **Init 测试**: `--init` 能产出带 `tone`、`vocabulary`、`render` 的最小配置
+8. **文档导出测试**: 请求 typst/latex/quarto 时，先产出 markdown，再在环境可用时编译
+9. **端到端测试**: git + artifact + 口述 → 完整汇报，Quick Mode < 1分钟，Full Mode < 3分钟

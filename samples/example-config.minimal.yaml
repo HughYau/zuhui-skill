@@ -3,6 +3,10 @@
 # Use this when you want one reusable profile without learning the full config yet.
 
 language: zh
+tone: neutral
+vocabulary:
+  - concept: "ablation study"
+    preferred: "控制变量"
 
 profiles:
   weekly-email:
@@ -12,6 +16,7 @@ profiles:
     layout: report
     verbosity: standard
     language: zh
+    tone: neutral
     signature:
       name: ""
       closing: "祝好"
@@ -35,3 +40,9 @@ artifacts:
     - "*.png"
     - "*.ipynb"
     - "*.md"
+
+render:
+  enabled: auto
+  format: markdown
+  template: classic-report
+  compile: auto

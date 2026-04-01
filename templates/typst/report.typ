@@ -1,4 +1,5 @@
 // Progress Report Template (Typst)
+// Template id: classic-report
 // 可直接编译：typst compile report.typ
 // 将示例文本替换成你的内容即可使用
 

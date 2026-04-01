@@ -2,6 +2,7 @@
 title: "Weekly Progress Report"
 author: "Your Name"
 date: "2026-03-25 to 2026-04-01"
+template-id: "classic-report"
 format:
   html:
     toc: true

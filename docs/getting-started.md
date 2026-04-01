@@ -4,6 +4,17 @@ This guide is for the first 10 minutes with `progress-report`.
 
 ## Choose the right path
 
+Use Interactive Init if:
+- you want a reusable setup but do not want to hand-write YAML
+- you want Claude to ask a few onboarding questions and generate `.progress-config.yaml`
+- you want to set default tone and lab-specific wording once
+
+Run:
+
+```text
+/progress-report --init
+```
+
 Use Quick Mode if:
 - you need a usable draft right now
 - you do not have `.progress-config.yaml` yet
@@ -34,9 +45,10 @@ This path is the lowest-friction option and is the recommended default for new u
 
 When Quick Mode proves useful, create reusable project-local files:
 
-1. Copy `samples/example-config.yaml` to `.progress-config.yaml`.
+1. Either run `/progress-report --init` or copy `samples/example-config.yaml` to `.progress-config.yaml`.
 2. Adjust the profiles you actually need.
-3. Let the skill create or update `.progress-state.yaml` after a confirmed run.
+3. Set `tone`, `vocabulary`, and `render` before you over-customize style learning.
+4. Let the skill create or update `.progress-state.yaml` after a confirmed run.
 
 Recommended starter profiles:
 - `weekly-email` for a detailed advisor message
@@ -50,7 +62,11 @@ The highest-value fields to edit are:
 - `advisor_preset`
 - `format`
 - `language`
+- `tone`
+- `vocabulary`
 - `artifacts.scan_dirs`
+- `render.format`
+- `render.template`
 
 Leave style learning empty until you have a few real past reports to learn from.
 
@@ -66,10 +82,12 @@ If your real progress mostly lives outside git, say that early and rely more on 
 ## Common workflow
 
 1. Run Quick Mode once to get a feel for the output.
-2. Set up one profile for your main advisor.
-3. Add artifact directories that matter in your workflow.
-4. Use Full Mode for your next weekly update.
-5. Only after the draft is acceptable, let the skill update `.progress-state.yaml`.
+2. Run Interactive Init when you are ready for a reusable setup.
+3. Set up one profile for your main advisor.
+4. Add artifact directories that matter in your workflow.
+5. If you need PDF export, set `render.format` to `typst` or `latex` and keep `render.template: classic-report` for the first smoke test.
+6. Use Full Mode for your next weekly update.
+7. Only after the draft is acceptable, let the skill update `.progress-state.yaml`.
 
 ## Output expectations
 
@@ -87,3 +105,4 @@ Example outputs:
 - [Markdown report sample](../samples/example-output-report.md)
 
 If you hit an edge case, check [FAQ](faq.md) before expanding the config.
+For document export and compilation, see [Export Workflows](export-workflows.md).

@@ -5,6 +5,18 @@
 # 语言 / Language
 language: zh  # zh | en | bilingual
 
+# 默认语气 / Default tone
+tone: neutral  # neutral | struggling | triumphant
+
+# 实验室/导师偏好词汇 / Shared vocabulary
+vocabulary:
+  - concept: "run experiments"
+    preferred: "跑实验"
+  - concept: "ablation study"
+    preferred: "控制变量"
+  - concept: "negative result"
+    preferred: "负结果"
+
 # 沟通 profile（支持多个，覆盖不同场景和对象）
 # Communication profiles (multiple, for different audiences and scenarios)
 profiles:
@@ -16,6 +28,12 @@ profiles:
     layout: report
     verbosity: standard        # brief | standard | detailed
     language: zh
+    tone: neutral
+    vocabulary:
+      - concept: "run experiments"
+        preferred: "炼丹"
+      - concept: "baseline"
+        preferred: "baseline"
     signature:
       name: ""
       closing: "祝好"
@@ -27,6 +45,7 @@ profiles:
     layout: slides
     verbosity: standard
     language: zh
+    tone: triumphant
 
   quick-sync:
     audience: "张老师"
@@ -35,6 +54,7 @@ profiles:
     layout: report
     verbosity: brief
     language: zh
+    tone: struggling
 
   # co-advisor:
   #   audience: "Prof. Smith"
@@ -43,6 +63,10 @@ profiles:
   #   layout: report
   #   verbosity: standard
   #   language: en
+  #   tone: neutral
+  #   vocabulary:
+  #     - concept: "ablation study"
+  #       preferred: "controlled comparison"
   #   signature:
   #     name: ""
   #     closing: "Best"
@@ -75,7 +99,15 @@ artifacts:
   # 只扫描 last_report_at 之后修改的文件
   # Only scans files modified after last_report_at
 
+# 文档导出 / Document export
+render:
+  enabled: auto               # auto | always | never
+  format: markdown            # markdown | typst | latex | quarto
+  template: classic-report    # classic-report | thesis-status | lab-slides
+  compile: auto               # auto | always | never
+
 # 建议：
 # 1. 第一次使用先保留一个 weekly-email profile 即可
 # 2. 确定流程顺手后，再新增 group-meeting 或 quick-sync
-# 3. experimental 输出建议先生成 markdown，再转换到模板
+# 3. 如果你常做正式 PDF，优先把 render.template 设为 classic-report
+# 4. vocabulary 只放你真的想固定下来的实验室黑话，不要把每个普通词都改写

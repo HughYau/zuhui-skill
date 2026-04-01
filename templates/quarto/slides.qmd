@@ -2,6 +2,7 @@
 title: "Weekly Progress"
 author: "Your Name"
 date: "2026-03-25 to 2026-04-01"
+template-id: "lab-slides"
 format:
   revealjs:
     slide-number: true

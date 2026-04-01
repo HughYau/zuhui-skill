@@ -10,6 +10,14 @@ Yes. Start with:
 
 That is the intended first-run path when you want the lowest setup cost.
 
+If you already know you want a reusable setup, use:
+
+```text
+/progress-report --init
+```
+
+That path asks a few onboarding questions and generates `.progress-config.yaml` for you.
+
 ## I have no git history for the real progress. Is this still useful?
 
 Yes. The skill should fall back to:
@@ -49,13 +57,40 @@ Use `bilingual` only when you genuinely need one shared source draft. If you onl
 
 ## I asked for Typst, LaTeX, or Quarto. Why is markdown still mentioned?
 
-Because those formats are experimental in this repo.
+Because the repo uses a markdown-first export path on purpose.
 
-The stable path is:
+The stable logic is:
 1. generate the markdown content first
-2. reuse or convert it into the experimental template
+2. reuse or convert it into the document template
+3. compile only if the local toolchain is available
 
 This keeps the reporting logic stable even when the export layer is still evolving.
+
+## How do I make the wording sound like my lab instead of generic AI text?
+
+Use `vocabulary` in `.progress-config.yaml` and keep it small and intentional.
+
+Example:
+
+```yaml
+vocabulary:
+  - concept: "run experiments"
+    preferred: "炼丹"
+  - concept: "ablation study"
+    preferred: "控制变量"
+```
+
+The skill should then keep those terms consistent in the final report.
+
+## What is `tone` for?
+
+Use `tone` when you want the same facts presented with different rhetorical emphasis.
+
+- `neutral`: default weekly update
+- `struggling`: blocker-heavy update where you need help
+- `triumphant`: breakthrough-heavy update where you need to surface impact clearly
+
+`tone` changes framing, not the evidence standard. It must not be used to exaggerate results.
 
 ## When does `.progress-state.yaml` get updated?
 
