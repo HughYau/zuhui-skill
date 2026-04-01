@@ -1,0 +1,43 @@
+---
+title: "Weekly Progress Report"
+author: "{{author}}"
+date: today
+format:
+  html:
+    toc: true
+  pdf:
+    documentclass: article
+    geometry: margin=2.5cm
+# 中文用户加上：
+# lang: zh
+# CJKmainfont: "Noto Sans CJK SC"
+---
+
+## Summary
+
+<!-- 1-2句话概括本周整体进展 -->
+
+## Progress
+
+### {{item_1_title}}
+
+<!-- 描述、结果、evidence -->
+
+<!-- 插入结果图：-->
+<!-- ![实验结果](results/example.png){width=80%} -->
+
+### {{item_2_title}}
+
+<!-- ... -->
+
+## Blockers
+
+<!-- 遇到的问题，是否需要帮助 -->
+
+## Questions for Advisor
+
+<!-- 需要导师确认/决策的事项 -->
+
+## Next Steps
+
+<!-- 下周计划 -->

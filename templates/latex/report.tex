@@ -1,0 +1,49 @@
+% Progress Report Template (LaTeX)
+% 可直接编译：pdflatex report.tex
+% 用户替换 {{}} 占位符后即可使用
+
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{enumitem}
+
+% 中文用户取消下面两行注释
+% \usepackage{ctex}
+% \setCJKmainfont{Noto Sans CJK SC}
+
+\title{Weekly Progress Report \\ \large {{period}}}
+\author{{{author}}}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section{Summary}
+% 1-2句话概括本周整体进展
+
+\section{Progress}
+
+\subsection{{{item\_1\_title}}}
+% 描述、结果、evidence
+
+% 插入结果图（取消注释并替换路径）：
+% \begin{figure}[h]
+%   \centering
+%   \includegraphics[width=0.8\textwidth]{results/example.png}
+%   \caption{实验结果}
+% \end{figure}
+
+\subsection{{{item\_2\_title}}}
+% ...
+
+\section{Blockers}
+% 遇到的问题，是否需要帮助
+
+\section{Questions for Advisor}
+% 需要导师确认/决策的事项
+
+\section{Next Steps}
+% 下周计划
+
+\end{document}

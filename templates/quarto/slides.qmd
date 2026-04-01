@@ -1,0 +1,28 @@
+---
+title: "Weekly Progress"
+author: "{{author}}"
+date: today
+format:
+  revealjs:
+    slide-number: true
+    theme: simple
+---
+
+## This Week
+
+<!-- 要点列表 -->
+
+<!-- 插入图表：-->
+<!-- ![实验结果](results/example.png){width=70%} -->
+
+## Blockers
+
+<!-- 卡点，是否需要帮助 -->
+
+## Questions
+
+<!-- 需要导师确认的事项 -->
+
+## Next Steps
+
+<!-- 下周计划 -->

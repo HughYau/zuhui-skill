@@ -1,0 +1,75 @@
+# .progress-config.yaml
+# 复制此文件到你的项目根目录，按需修改
+
+# 语言 / Language
+language: zh  # zh | en | bilingual
+
+# 沟通 profile（支持多个，覆盖不同场景和对象）
+# Communication profiles (multiple, for different audiences and scenarios)
+profiles:
+  weekly-email:
+    audience: "张老师"          # 发给谁
+    advisor_preset: detail-oriented  # hands-off | detail-oriented | high-level | intuitive | custom
+    custom_traits: null
+    format: email
+    layout: report
+    verbosity: standard        # brief | standard | detailed
+    language: zh
+    signature:
+      name: ""
+      closing: "祝好"
+
+  group-meeting:
+    audience: "组会"
+    advisor_preset: high-level
+    format: markdown
+    layout: slides
+    verbosity: standard
+    language: zh
+
+  quick-sync:
+    audience: "张老师"
+    advisor_preset: hands-off
+    format: chat
+    layout: report
+    verbosity: brief
+    language: zh
+
+  # co-advisor:
+  #   audience: "Prof. Smith"
+  #   advisor_preset: intuitive
+  #   format: email
+  #   layout: report
+  #   verbosity: standard
+  #   language: en
+  #   signature:
+  #     name: ""
+  #     closing: "Best"
+
+# 默认 profile（不指定时用哪个）
+default_profile: weekly-email
+
+# 个人风格 / Personal style
+style:
+  sample_files: []           # 过去汇报样本路径，如 ["samples/email-example.md"]
+  style_summary: null        # 首次分析后自动填充
+
+# 仓库 / Repositories
+repos:
+  - path: .
+
+# Artifact 扫描目录（除 git 外的进展来源）
+# Directories to scan for non-git progress artifacts
+artifacts:
+  scan_dirs:
+    - results/               # 实验结果、图表
+    - notebooks/             # Jupyter notebooks
+    - notes/                 # 阅读笔记、讨论记录
+    - data/                  # 数据处理产物
+  file_patterns:
+    - "*.png"                # 结果图
+    - "*.csv"                # 数据表
+    - "*.ipynb"              # notebooks
+    - "*.md"                 # 笔记
+  # 只扫描 last_report_at 之后修改的文件
+  # Only scans files modified after last_report_at
