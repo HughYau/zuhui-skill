@@ -6,27 +6,15 @@ This page describes how document export is expected to work for `typst`, `latex`
 
 1. Generate the stable report content first.
 2. Convert that content into the chosen template source.
-3. Detect the local toolchain.
-4. Compile when available.
-5. If compilation fails, keep the markdown output and return the source file plus a short failure summary.
+3. Return the source text directly.
+4. Save the source file if the user asks for a file.
+5. Keep the markdown output as the stable fallback when you need to show content separately from the template source.
 
-This keeps the content logic and the PDF/export layer loosely coupled.
-
-## Toolchain detection
-
-Use these commands:
-
-```text
-typst --version
-pdflatex --version
-quarto --version
-```
-
-If a command is unavailable, the export path should not be treated as failed research reporting. It should simply fall back to markdown plus source.
+This keeps the content logic and the export layer loosely coupled.
 
 ## Built-in template catalog
 
-- `classic-report`: safest first smoke test for a short weekly progress report
+- `classic-report`: safest starter template for a short weekly progress report
 - `thesis-status`: chapter-style progress note for thesis-oriented reporting
 - `lab-slides`: meeting slides with a simple section structure
 
@@ -45,36 +33,11 @@ Current file mapping:
   - `templates/quarto/thesis-status.qmd`
   - `templates/quarto/slides.qmd`
 
-## Compile commands
-
-Typst:
-
-```text
-typst compile templates/typst/report.typ
-typst compile templates/typst/thesis-status.typ
-```
-
-LaTeX:
-
-```text
-pdflatex -interaction=nonstopmode -halt-on-error templates/latex/report.tex
-pdflatex -interaction=nonstopmode -halt-on-error templates/latex/thesis-status.tex
-```
-
-Quarto:
-
-```text
-quarto render templates/quarto/report.qmd --to pdf
-quarto render templates/quarto/thesis-status.qmd --to pdf
-```
-
 ## CJK note
 
-ASCII-only smoke tests are the most reliable baseline.
+For Chinese source export:
+- Typst templates may still need a suitable CJK font once the user compiles them on their own machine
+- LaTeX templates may still need `ctex` and matching fonts
+- Quarto templates may depend on the user's downstream HTML or PDF toolchain
 
-For Chinese PDF export:
-- Typst usually needs a suitable CJK font
-- LaTeX often needs `ctex` and matching fonts
-- Quarto PDF may depend on the underlying LaTeX stack
-
-If Chinese content fails to compile, the tool should report the missing dependency instead of pretending the export succeeded.
+The skill itself should focus on producing clean source files rather than promising local rendering success.

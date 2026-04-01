@@ -141,7 +141,6 @@ render:
   enabled: auto
   format: markdown
   template: classic-report
-  compile: auto
 ```
 
 字段说明：
@@ -149,7 +148,6 @@ render:
 - `vocabulary`：术语偏好表。优先使用 `preferred`，避免泛化成过于标准的 AI 套话
 - `render.format`：文档导出目标，可选 `markdown | typst | latex | quarto`
 - `render.template`：模板名，例如 `classic-report | thesis-status | lab-slides`
-- `render.compile`：`auto | always | never`
 
 ### Step 1: 素材收集
 
@@ -292,23 +290,14 @@ progress_pool:
 如果用户请求 `typst`、`latex` 或 `quarto`：
 1. 先生成稳定的 markdown 内容
 2. 按 `render.template` 选择模板并生成源码
-3. 检测本地环境：
-   - Typst: `typst --version`
-   - LaTeX: `pdflatex --version`
-   - Quarto: `quarto --version`
-4. 若 `render.compile != never` 且环境存在，则尝试本地编译
-5. 若编译成功，返回源码路径和 PDF 路径
-6. 若编译失败，返回：
-   - markdown 内容
-   - 模板源码
-   - 失败原因摘要
-   - 用户下一步可执行的修复建议
+3. 默认直接返回源码文本，或在用户要求时保存为代码文件
+4. 不主动尝试本地编译，也不把 PDF 生成作为成功条件
 
-编译策略：
-- `classic-report`：最稳健的单页/短报告模板，优先用于 smoke test
+导出策略：
+- `classic-report`：最稳健的单页/短报告模板
 - `thesis-status`：更接近 thesis/progress note 的章节结构
 - `lab-slides`：组会幻灯片模板
-- 对中文内容，如果编译环境缺少 CJK 字体或宏包，不要伪装成成功；要明确指出缺的依赖
+- 对中文内容，要优先保证源码结构清晰、注释到位，而不是承诺本地编译结果
 
 只有在用户确认本次结果可用之后，才更新 `.progress-state.yaml`：
 - `last_report_at`
@@ -330,15 +319,14 @@ progress_pool:
   --since     时间范围，如 "last monday", "2 weeks ago"
   --tone      neutral | struggling | triumphant
   --quick     强制 Quick Mode
-  --no-compile 请求文档格式时仅生成源码，不尝试编译
 ```
 
 稳定输出仍以 `email`、`chat`、`markdown` 为主。
 `typst`、`latex`、`quarto` 走增强后的文档导出路径：
 - 允许直接请求
 - 默认先生成 markdown
-- 有环境时尝试编译到 PDF
-- 无环境或失败时回退到 markdown + 源码，而不是只给一句 experimental 提示
+- 默认返回源码文本，或按用户要求保存为代码文件
+- 不以本地编译成功作为本 skill 的职责边界
 
 ## 常见适配场景
 
@@ -349,7 +337,7 @@ progress_pool:
 - 英文协作者：`email` 或 `chat` + `en`
 - 中英混合沟通：`bilingual`
 - 想长期复用又不想手写配置：`--init`
-- 想要正式 PDF：`typst` 或 `latex` 的 `classic-report`
+- 想要正式文档源码：`typst` 或 `latex` 的 `classic-report`
 
 如果用户只是说“帮我配一个常用模板”，优先推荐上面最接近的组合，不要让用户从空白开始想
 
@@ -384,6 +372,5 @@ leaf_hints:
 - 无风格样本：跳过风格适配，仅做去 AI 化
 - 无状态文件：创建新状态，默认从最近一周开始
 - 素材和上次汇报重叠：提示用户，标记重叠部分让用户决定是否保留
-- 用户要求文档格式但本地无编译环境：返回 markdown + 模板源码 + 安装提示
-- 用户要求文档格式且编译失败：返回失败摘要，不要伪装成 PDF 已生成
+- 用户要求文档格式：返回 markdown + 模板源码，必要时保存为文件
 - 素材全部 `confidence=preliminary`：在输出开头加一句明确提示

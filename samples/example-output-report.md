@@ -2,24 +2,20 @@
 
 ## Progress
 
-- Re-ran the baseline with a cleaned split so this week's comparison uses the same evaluation setup.
-- Added a notebook summary and one result figure to make the experimental path easier to explain.
-- Consolidated notes from failed and retained attempts into one update so the reasoning is easier to follow.
+This week I re-ran the baseline with a cleaned split so the current comparison uses the same evaluation setup throughout. I also added a notebook summary and one updated result figure, which makes the experimental path easier to explain without forcing the reader to reconstruct it from scattered notes. In addition, I consolidated the failed attempts and the retained direction into one coherent update so the reasoning is easier to follow.
 
 ## Confidence and Evidence
 
-- The new result is still preliminary because it comes from a single seed.
-- Evidence: one git changeset, one updated figure, one notebook summary.
+The current result is still preliminary because it comes from a single seed. At this point the evidence consists of one git changeset, one updated figure, and one notebook summary, which is enough to justify continuing but not enough to claim the result is settled.
 
 ## Questions
 
-- Should the next iteration prioritize verification with multiple seeds or expansion to a larger dataset?
+The main open question is whether the next iteration should prioritize verification with multiple seeds or move directly to a larger dataset.
 
 ## Blockers
 
-- GPU availability remains the main scheduling bottleneck for larger runs.
+GPU availability remains the main scheduling bottleneck for larger runs, so any expansion in scope will likely slow the cycle unless the experiment matrix is reduced.
 
 ## Next Steps
 
-- Run multi-seed verification on the current setup.
-- Prepare a concise comparison table for the next advisor meeting.
+The next step is to complete multi-seed verification on the current setup and prepare a concise comparison table for the next advisor meeting.

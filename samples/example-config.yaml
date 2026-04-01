@@ -104,10 +104,9 @@ render:
   enabled: auto               # auto | always | never
   format: markdown            # markdown | typst | latex | quarto
   template: classic-report    # classic-report | thesis-status | lab-slides
-  compile: auto               # auto | always | never
 
 # 建议：
 # 1. 第一次使用先保留一个 weekly-email profile 即可
 # 2. 确定流程顺手后，再新增 group-meeting 或 quick-sync
-# 3. 如果你常做正式 PDF，优先把 render.template 设为 classic-report
+# 3. 如果你常导出正式文档源码，优先把 render.template 设为 classic-report
 # 4. vocabulary 只放你真的想固定下来的实验室黑话，不要把每个普通词都改写

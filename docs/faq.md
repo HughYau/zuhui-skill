@@ -62,7 +62,7 @@ Because the repo uses a markdown-first export path on purpose.
 The stable logic is:
 1. generate the markdown content first
 2. reuse or convert it into the document template
-3. compile only if the local toolchain is available
+3. return or save the document source file
 
 This keeps the reporting logic stable even when the export layer is still evolving.
 

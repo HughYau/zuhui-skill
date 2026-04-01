@@ -6,12 +6,14 @@
 
 `Zuhui Skill` (formerly `progress-report`) is a Claude Code skill for grad students and researchers who need to report to advisors, lab meetings, and collaborators without rewriting the same update from scratch every week. 🎓
 
+It is better understood now as a **project-local reporting skill pack**: Claude Code can use it, Codex can use it, and OpenCode or other AI tools that can read project files can use it too.
+
 ## 🎯 What it produces
 
 - 📧 **Email**: Formal updates for your advisor or project leads.
 - 💬 **Chat**: Quick syncs for WeChat, Slack, or Teams.
 - 📝 **Markdown**: Formatted meeting notes or long-form reports.
-- 📄 **Typst/LaTeX/Quarto**: Document-export templates for formal reports, using a markdown-first flow with optional local compilation.
+- 📄 **Typst/LaTeX/Quarto**: Document-export templates for formal reports, using a markdown-first flow that returns source files.
 - 🧭 **Interactive Init (`--init`)**: A low-friction onboarding path that generates `.progress-config.yaml` through a short conversation.
 - 🗣️ **Vocabulary + Tone Control**: Supports lab-specific wording and rhetorical framing through `vocabulary` and `tone`.
 
@@ -78,7 +80,7 @@ The core of this skill is not "helping you write more like an AI," but **making 
 
 ## 🚀 First Run
 
-1. Install this skill in Claude Code.
+1. Do not default to a global install. Put this skill inside the research project you want to report on, or create a dedicated reporting workspace.
 2. For the lowest-friction path, test the waters with `/progress-report --quick`. 🌊
 3. If you want the skill to create the config for you, run `/progress-report --init`.
 4. Switch to Full Mode when you are ready for reusable templates and time tracking.
@@ -87,11 +89,65 @@ The core of this skill is not "helping you write more like an AI," but **making 
    - 📄 `samples/example-state.yaml`
 
 For a fuller walkthrough, see:
+- 🧩 [Installation](docs/installation.md)
 - 📖 [Getting Started](docs/getting-started.md)
 - 🤝 [Compatibility](docs/compatibility.md)
 - 🧾 [Export Workflows](docs/export-workflows.md)
 - 🍳 [Profile Recipes](docs/profile-recipes.md)
 - ❓ [FAQ](docs/faq.md)
+
+## 📦 Recommended Install
+
+The preferred setup is **project-local**, not global.
+
+Recommended layout:
+
+```text
+your-research-project/
+├── .progress-config.yaml
+├── .progress-state.yaml
+├── tools/
+│   └── progress-report-skill/
+├── results/
+├── notebooks/
+└── notes/
+```
+
+This matters because the AI can read the actual git history, figures, notebooks, and notes from the project, while the state and config stay tied to the correct reporting context.
+
+The same integration pattern can be reused across Codex, Claude Code, OpenCode, and similar AI tools:
+1. Put this repo inside the project, for example under `tools/progress-report-skill/`
+2. Ask the AI to read:
+   - `tools/progress-report-skill/commands/progress-report.md`
+   - `tools/progress-report-skill/skills/progress-report/SKILL.md`
+3. Create `.progress-config.yaml` in the project root
+4. Keep `.progress-state.yaml` in the same project root
+
+See [docs/installation.md](docs/installation.md) for the full version.
+
+## 🤖 Copy This To Your AI
+
+If you want an AI agent to install the skill for you, copy this block as-is:
+
+```text
+Please install the progress-report skill into this project as a project-local tool, not as a global install.
+
+Requirements:
+1. Put the skill under `tools/progress-report-skill/` in the current project, or reuse that path if it already exists.
+2. Read and follow:
+   - `tools/progress-report-skill/commands/progress-report.md`
+   - `tools/progress-report-skill/skills/progress-report/SKILL.md`
+3. Create `.progress-config.yaml` in the project root using the minimal sample unless a richer config is clearly needed.
+4. Keep `.progress-state.yaml` in the same project root.
+5. Assume this project-local install should work for Codex, Claude Code, OpenCode, and similar AI coding tools.
+6. Do not install anything globally unless I explicitly ask.
+
+After setup, tell me:
+- where the skill was placed
+- which config file was created
+- how I should trigger Quick Mode
+- how I should trigger Interactive Init
+```
 
 ## 👀 Samples
 
@@ -108,7 +164,7 @@ If you want to see the end result before configuring anything, start here:
 
 `email`, `chat`, and `markdown` are the supported V1 outputs, highly stable and reliable. 🐕
 
-For `typst`, `latex`, and `quarto`, the repo now uses a stronger document-export path: generate stable markdown first, map it into template source, and try local compilation when the toolchain exists. If the environment is missing or compilation fails, the fallback is markdown plus source files.
+For `typst`, `latex`, and `quarto`, the repo now uses a stronger document-export path: generate stable markdown first, then map it into template source. The default behavior is to return source text or save code files when requested.
 
 Audience and language coverage supported by this repo:
 - Advisors, co-advisors, lab meetings, external collaborators. 👨‍🏫

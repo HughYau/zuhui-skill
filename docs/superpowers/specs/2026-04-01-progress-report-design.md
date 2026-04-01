@@ -14,7 +14,7 @@
 5. Quick Mode 零配置应急路径，降低首次使用门槛
 6. 增加 `--init` 交互式初始化，降低首次配置门槛
 7. 支持 `tone` 与 `vocabulary`，让输出贴合导师/实验室语境
-8. Typst/LaTeX/Quarto 升级为 markdown-first 文档导出路径，并在环境可用时尝试本地编译
+8. Typst/LaTeX/Quarto 升级为 markdown-first 文档导出路径，默认返回或保存源码文件
 
 ---
 
@@ -93,7 +93,6 @@ render:
   enabled: auto
   format: markdown
   template: classic-report
-  compile: auto
 ```
 
 ### 3.3 状态文件核心结构
@@ -187,11 +186,11 @@ progress_pool:
 
 | 格式 | 状态 | 模板 |
 |------|------|------|
-| `typst` | markdown-first，可在有环境时编译，支持插图 | `templates/typst/` |
-| `latex` | markdown-first，可在有环境时编译，支持插图 | `templates/latex/` |
-| `quarto` | markdown-first，可在有环境时编译，支持插图 | `templates/quarto/` |
+| `typst` | markdown-first，返回或保存源码，支持插图 | `templates/typst/` |
+| `latex` | markdown-first，返回或保存源码，支持插图 | `templates/latex/` |
+| `quarto` | markdown-first，返回或保存源码，支持插图 | `templates/quarto/` |
 
-使用这些格式时先生成 markdown，再映射到模板源码，并在环境可用时尝试编译。
+使用这些格式时先生成 markdown，再映射到模板源码，并按用户需要返回文本或保存文件。
 模板均已支持基本结构、中文注释、figure 插入位。
 Typst slides 当前依赖 `@preview/touying:0.5.5`，应在面向用户的文档里明确说明这一点。
 
@@ -280,5 +279,5 @@ zuhui-skill/
 5. **多 Profile 测试**: 同一素材，切换 weekly-email 和 quick-sync profile，对比输出
 6. **去AI化测试**: 生成后检查无 AI 高频模式
 7. **Init 测试**: `--init` 能产出带 `tone`、`vocabulary`、`render` 的最小配置
-8. **文档导出测试**: 请求 typst/latex/quarto 时，先产出 markdown，再在环境可用时编译
+8. **文档导出测试**: 请求 typst/latex/quarto 时，先产出 markdown，再返回或保存对应源码
 9. **端到端测试**: git + artifact + 口述 → 完整汇报，Quick Mode < 1分钟，Full Mode < 3分钟

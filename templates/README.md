@@ -19,6 +19,6 @@ This directory contains the built-in document export templates used by `progress
 
 ## Design goals
 
-- Every template should compile with ASCII-only sample content.
-- Comments may mention optional CJK setup, but the default smoke test should stay minimal.
+- Every template should stay readable with ASCII-only sample content.
+- Comments may mention optional CJK setup, but the default source should stay minimal.
 - The source should be readable enough for users to patch without reverse engineering a large theme.

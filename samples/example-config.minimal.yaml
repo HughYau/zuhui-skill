@@ -45,4 +45,3 @@ render:
   enabled: auto
   format: markdown
   template: classic-report
-  compile: auto

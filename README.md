@@ -11,7 +11,7 @@
 - 📧 **邮件 (Email)**：适用于向导师汇报进度的正式邮件。
 - 💬 **聊天 (Chat)**：适用于微信、Slack 或 Teams 的快速日常同步。
 - 📝 **Markdown**：适用于组会记录、长篇报告或个人存档。
-- 📄 **Typst/LaTeX/Quarto**：用于正式文档的排版与导出模板，采用 Markdown-first 工作流并支持本地编译尝试。
+- 📄 **Typst/LaTeX/Quarto**：用于正式文档的排版与导出模板，采用 Markdown-first 工作流并返回源码文件。
 - 🧭 **交互式初始化 (`--init`)**：通过少量对话问题自动生成 `.progress-config.yaml`。
 - 🗣️ **术语词典 + 语气控制**：支持 `vocabulary` 和 `tone`，让输出更贴近导师/实验室语境。
 
@@ -71,7 +71,7 @@
 
 ## 🚀 首次使用指南 (First Run)
 
-1. 在 Claude Code 中安装该 skill。
+1. 不要优先全局安装，建议把这个 skill 放进你要汇报的研究项目里，或者单独新建一个汇报 workspace。
 2. 如果想快速体验，建议从 `/progress-report --quick` 开始。🌊
 3. 如果你想直接让系统帮你生成配置，运行 `/progress-report --init`。
 4. 当你需要可复用的模板和时间范围追踪时，切换到完全体模式 (Full Mode)。
@@ -80,11 +80,65 @@
    - 📄 `samples/example-state.yaml`
 
 如需更详细的教程，请参阅：
+- 🧩 [安装指南 (Installation)](docs/installation.md)
 - 📖 [入门指南 (Getting Started)](docs/getting-started.md)
 - 🤝 [兼容性说明 (Compatibility)](docs/compatibility.md)
 - 🧾 [导出工作流 (Export Workflows)](docs/export-workflows.md)
 - 🍳 [Profile 配置文件参考 (Profile Recipes)](docs/profile-recipes.md)
 - ❓ [常见问题 (FAQ)](docs/faq.md)
+
+## 📦 安装方式 (Recommended Install)
+
+推荐方式不是全局安装，而是**项目内安装**。
+
+最推荐的目录结构如下：
+
+```text
+your-research-project/
+├── .progress-config.yaml
+├── .progress-state.yaml
+├── tools/
+│   └── progress-report-skill/
+├── results/
+├── notebooks/
+└── notes/
+```
+
+这样做的原因很直接：AI 可以直接读到当前项目的 git 历史、结果图、notebook 和笔记，状态文件也不会和别的项目串掉。
+
+Codex、Claude Code、OpenCode 以及其他能读取项目文件的 AI 工具，都可以复用同一套接入方式：
+1. 把本仓库放到项目里，例如 `tools/progress-report-skill/`
+2. 让 AI 读取：
+   - `tools/progress-report-skill/commands/progress-report.md`
+   - `tools/progress-report-skill/skills/progress-report/SKILL.md`
+3. 在项目根目录创建 `.progress-config.yaml`
+4. 后续在同一个项目根目录维护 `.progress-state.yaml`
+
+完整说明见 [docs/installation.md](docs/installation.md)。
+
+## 🤖 复制给 AI 安装
+
+如果你希望直接把安装工作交给 AI，可以把下面这段原样复制给它：
+
+```text
+请把 progress-report skill 安装到当前项目里，按项目级工具处理，不要做全局安装。
+
+要求：
+1. 将 skill 放到 `tools/progress-report-skill/`，如果该目录已存在则复用。
+2. 读取并遵循：
+   - `tools/progress-report-skill/commands/progress-report.md`
+   - `tools/progress-report-skill/skills/progress-report/SKILL.md`
+3. 在项目根目录创建 `.progress-config.yaml`，默认优先使用 minimal sample，除非当前项目明显需要完整配置。
+4. 将 `.progress-state.yaml` 也放在项目根目录。
+5. 这套安装方式需要兼容 Codex、Claude Code、OpenCode 以及类似的 AI 工具。
+6. 除非我明确要求，否则不要全局安装。
+
+安装完成后，请告诉我：
+- skill 被放在了哪里
+- 创建了哪个配置文件
+- 如何触发 Quick Mode
+- 如何触发 Interactive Init
+```
 
 ## 👀 汇报示例 (Samples)
 

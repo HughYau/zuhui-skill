@@ -2,6 +2,13 @@
 
 This guide is for the first 10 minutes with `progress-report`.
 
+Before anything else: keep this skill project-local when possible.
+
+Best practice:
+- put it inside the research repo you are actually reporting on
+- or create a separate reporting workspace for one project or one advisor workflow
+- avoid a global install unless you are very sure you want one shared setup across projects
+
 ## Choose the right path
 
 Use Interactive Init if:
@@ -85,7 +92,7 @@ If your real progress mostly lives outside git, say that early and rely more on 
 2. Run Interactive Init when you are ready for a reusable setup.
 3. Set up one profile for your main advisor.
 4. Add artifact directories that matter in your workflow.
-5. If you need PDF export, set `render.format` to `typst` or `latex` and keep `render.template: classic-report` for the first smoke test.
+5. If you need formal document source, set `render.format` to `typst` or `latex` and keep `render.template: classic-report` for the first export.
 6. Use Full Mode for your next weekly update.
 7. Only after the draft is acceptable, let the skill update `.progress-state.yaml`.
 
@@ -105,4 +112,4 @@ Example outputs:
 - [Markdown report sample](../samples/example-output-report.md)
 
 If you hit an edge case, check [FAQ](faq.md) before expanding the config.
-For document export and compilation, see [Export Workflows](export-workflows.md).
+For document source export, see [Export Workflows](export-workflows.md).
