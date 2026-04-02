@@ -98,4 +98,4 @@ Only after the generated result is confirmed as usable. This avoids locking in a
 
 ## I only want one reusable profile. Which one should I start with?
 
-Start with `weekly-email` from [example-config.minimal.yaml](../samples/example-config.minimal.yaml). It is the fastest path to a reusable setup without learning the entire config structure.
+Start with `weekly-email` from [example-config.minimal.yaml](../assets/samples/example-config.minimal.yaml). It is the fastest path to a reusable setup without learning the entire config structure.

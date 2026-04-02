@@ -52,7 +52,7 @@ This path is the lowest-friction option and is the recommended default for new u
 
 When Quick Mode proves useful, create reusable project-local files:
 
-1. Either run `/progress-report --init` or copy `samples/example-config.yaml` to `.progress-config.yaml`.
+1. Either run `/progress-report --init` or copy `../assets/samples/example-config.yaml` to `.progress-config.yaml`.
 2. Adjust the profiles you actually need.
 3. Set `tone`, `vocabulary`, and `render` before you over-customize style learning.
 4. Let the skill create or update `.progress-state.yaml` after a confirmed run.
@@ -106,10 +106,10 @@ The generated result should always make these items easy to scan:
 - next steps
 
 Example outputs:
-- [Email sample (Chinese)](../samples/example-output-email-zh.md)
-- [Email sample (English)](../samples/example-output-email-en.md)
-- [Chat sample](../samples/example-output-chat.md)
-- [Markdown report sample](../samples/example-output-report.md)
+- [Email sample (Chinese)](../examples/example-output-email-zh.md)
+- [Email sample (English)](../examples/example-output-email-en.md)
+- [Chat sample](../examples/example-output-chat.md)
+- [Markdown report sample](../examples/example-output-report.md)
 
 If you hit an edge case, check [FAQ](faq.md) before expanding the config.
 For document source export, see [Export Workflows](export-workflows.md).

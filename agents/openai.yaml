@@ -1,0 +1,7 @@
+interface:
+  display_name: "Progress Report"
+  short_description: "Draft research progress updates for advisors and labs"
+  default_prompt: "Use $progress-report to draft a concise research progress update from my recent work."
+
+policy:
+  allow_implicit_invocation: true

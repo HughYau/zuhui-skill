@@ -76,8 +76,9 @@
 3. 如果你想直接让系统帮你生成配置，运行 `/progress-report --init`。
 4. 当你需要可复用的模板和时间范围追踪时，切换到完全体模式 (Full Mode)。
 5. 准备好自定义配置时，可以复制并修改示例文件：
-   - 📄 `samples/example-config.yaml`
-   - 📄 `samples/example-state.yaml`
+   - 📄 `assets/samples/example-config.yaml`
+   - 📄 `assets/samples/example-config.minimal.yaml`
+   状态文件 `.progress-state.yaml` 建议在第一次确认输出可用后自动生成。
 
 如需更详细的教程，请参阅：
 - 🧩 [安装指南 (Installation)](docs/installation.md)
@@ -89,20 +90,29 @@
 
 ## 📦 安装方式 (Recommended Install)
 
-推荐方式不是全局安装，而是**项目内安装**。
+推荐方式是**项目内安装**，不是全局安装。
 
-通用安装其实只需要满足三件事：
-1. 把这个仓库放在你要汇报的项目里，或者放在一个单独的汇报 workspace 里。
-2. 把 `.progress-config.yaml` 和 `.progress-state.yaml` 放在同一个项目或 workspace 根目录。
-3. 让 AI 读取：
-   - `commands/progress-report.md`
-   - `skills/progress-report/SKILL.md`
+现在这个仓库的**根目录本身就是 skill 根目录**，最简单的安装方式就是直接 clone 到项目的 `clients/skills/` 下面，例如：
 
-这里没有强制目录名。`progress-report-skill/`、`tools/progress-report-skill/`、`.ai/skills/progress-report/` 都可以，本质上只要是**项目本地可读**即可。
+```bash
+git clone <this-repo-url> clients/skills/progress-report
+```
 
-这样做的原因很直接：AI 可以直接读到当前项目的 git 历史、结果图、notebook 和笔记，状态文件也不会和别的项目串掉。
+最小可用安装只需要三步：
+1. 把整个仓库 clone 到当前项目的 `clients/skills/<skill-name>/`，或其他等价的项目内 skills 目录。
+2. 把 `.progress-config.yaml` 和 `.progress-state.yaml` 放在该项目或 workspace 根目录。
+3. 让 AI 至少读取：
+   - `SKILL.md`
+   - 必要时再按需读取 `references/` 和 `assets/`
 
-完整说明见 [docs/installation.md](docs/installation.md)。
+安装时请把仓库根目录视为真正的 skill 本体：
+- `SKILL.md` 是 canonical skill 入口。
+- `assets/samples/` 是 canonical 配置样例来源。
+- `examples/` 更适合给人快速浏览效果，而不是作为安装时的主来源。
+
+这样做的直接收益是：安装动作变成普通的 clone，AI 可以读取当前项目的 git 历史、结果图、notebook 和笔记，同时配置与状态文件不会和别的项目串掉。
+
+完整安装流程见 [docs/installation.md](docs/installation.md)。
 
 ## 🤖 复制给 AI 安装
 
@@ -114,10 +124,10 @@
 要求：
 1. 将 skill 保持为当前项目或当前 workspace 的本地工具，不要做全局安装，目录名不重要。
 2. 读取并遵循：
-   - `commands/progress-report.md`
-   - `skills/progress-report/SKILL.md`
+   - `SKILL.md`
+   - 如有需要，再按需读取 `references/` 和 `assets/`
    如果仓库被放在子目录里，请使用带前缀的正确路径。
-3. 在项目或 workspace 根目录创建 `.progress-config.yaml`，默认优先使用 minimal sample，除非当前项目明显需要完整配置。
+3. 在项目或 workspace 根目录创建 `.progress-config.yaml`，默认优先使用 `assets/samples/example-config.minimal.yaml`，除非当前项目明显需要完整配置。
 4. 将 `.progress-state.yaml` 也放在同一个根目录。
 5. 这套安装方式需要兼容 Codex、Claude Code、OpenCode 以及类似的 AI 工具。
 6. 除非我明确要求，否则不要全局安装。
@@ -132,26 +142,28 @@
 ## 👀 汇报示例 (Samples)
 
 如果你想在配置之前先看看效果，可以参考以下示例：
-- 🇨🇳 [中文邮件示例](samples/example-output-email-zh.md)
-- 🇬🇧 [英文邮件示例](samples/example-output-email-en.md)
-- 💬 [聊天工具汇报示例](samples/example-output-chat.md)
-- 📝 [Markdown 报告示例](samples/example-output-report.md)
-- ⚙️ [极简配置文件示例](samples/example-config.minimal.yaml)
+- 🇨🇳 [中文邮件示例](examples/example-output-email-zh.md)
+- 🇬🇧 [英文邮件示例](examples/example-output-email-en.md)
+- 💬 [聊天工具汇报示例](examples/example-output-chat.md)
+- 📝 [Markdown 报告示例](examples/example-output-report.md)
+- ⚙️ [极简配置文件示例](assets/samples/example-config.minimal.yaml)
 
 （README 中提供这些具体示例，是为了让大家在投入时间配置前，能直观地评估汇报的语气和结构。😎）
 
 ## 🍳 新手配置参考 (Starter Recipes)
 
 如果你不想从零开始设计 Profile，可以使用：
-- 🏃 [极简配置示例](samples/example-config.minimal.yaml)：最快搭建可复用工作流。
+- 🏃 [极简配置示例](assets/samples/example-config.minimal.yaml)：最快搭建可复用工作流。
 - 👨‍🍳 [高级配置参考](docs/profile-recipes.md)：涵盖导师邮件、组会、合作者同步以及双语场景。
 
 ## 📂 仓库目录结构
 
 ```text
-commands/                      🚪 Claude Code 技能命令入口
-docs/                          📚 使用指南和兼容性文档
-samples/                       🎁 配置/状态示例及生成的输出样本
-skills/progress-report/        🧠 Skill 核心指令和参考说明
-templates/                     🪄 Typst/LaTeX/Quarto 文档导出模板
+SKILL.md                                       🧠 Skill 核心入口
+agents/                                        🏷️ UI 元数据
+references/                                    📖 按需加载的规则与参考
+assets/samples/                                ⚙️ canonical 配置样例
+assets/templates/                              🪄 Typst/LaTeX/Quarto 文档导出模板
+examples/                                      🎁 给人快速浏览的输出样本
+docs/                                          📚 使用指南和兼容性文档
 ```

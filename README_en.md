@@ -85,8 +85,9 @@ The core of this skill is not "helping you write more like an AI," but **making 
 3. If you want the skill to create the config for you, run `/progress-report --init`.
 4. Switch to Full Mode when you are ready for reusable templates and time tracking.
 5. When customizing your workflow, copy and modify the sample config files:
-   - 📄 `samples/example-config.yaml`
-   - 📄 `samples/example-state.yaml`
+   - 📄 `assets/samples/example-config.yaml`
+   - 📄 `assets/samples/example-config.minimal.yaml`
+   Let `.progress-state.yaml` be created after the first confirmed usable run.
 
 For a fuller walkthrough, see:
 - 🧩 [Installation](docs/installation.md)
@@ -100,14 +101,23 @@ For a fuller walkthrough, see:
 
 The preferred setup is **project-local**, not global.
 
-The generic install only needs three things:
-1. Keep this repo inside the project you want to report on, or inside a dedicated reporting workspace.
-2. Keep `.progress-config.yaml` and `.progress-state.yaml` in that same project or workspace root.
-3. Make sure the AI reads:
-   - `commands/progress-report.md`
-   - `skills/progress-report/SKILL.md`
+This repository's **root directory is now the skill root**. The simplest install is to clone it directly into a project's `clients/skills/` directory, for example:
 
-There is no required folder name. `progress-report-skill/`, `tools/progress-report-skill/`, and `.ai/skills/progress-report/` are all acceptable as long as the repo stays local to the reporting context.
+```bash
+git clone <this-repo-url> clients/skills/progress-report
+```
+
+The minimum viable install only needs three things:
+1. Clone this repo into `clients/skills/<skill-name>/` or an equivalent project-local skills directory.
+2. Keep `.progress-config.yaml` and `.progress-state.yaml` in the project or workspace root.
+3. Make sure the AI reads at least:
+   - `SKILL.md`
+   - and loads `references/` or `assets/` only when needed
+
+Treat the repo root as the actual skill body:
+- `SKILL.md` is the canonical skill entry.
+- `assets/samples/` is the canonical source for install-time config samples.
+- `examples/` is primarily for human preview, not the primary install source.
 
 This matters because the AI can read the actual git history, figures, notebooks, and notes from the project, while the state and config stay tied to the correct reporting context.
 
@@ -123,10 +133,10 @@ Please install the progress-report skill into this project as a project-local to
 Requirements:
 1. Keep the skill repo local to this project or workspace. The exact folder name is not important.
 2. Read and follow:
-   - `commands/progress-report.md`
-   - `skills/progress-report/SKILL.md`
+   - `SKILL.md`
+   - and load `references/` or `assets/` only if needed
    If the repo is placed in a subfolder, use the correct prefixed paths.
-3. Create `.progress-config.yaml` in the project or workspace root using the minimal sample unless a richer config is clearly needed.
+3. Create `.progress-config.yaml` in the project or workspace root using `assets/samples/example-config.minimal.yaml` unless a richer config is clearly needed.
 4. Keep `.progress-state.yaml` in the same root.
 5. Assume this project-local install should work for Codex, Claude Code, OpenCode, and similar AI coding tools.
 6. Do not install anything globally unless I explicitly ask.
@@ -141,11 +151,11 @@ After setup, tell me:
 ## 👀 Samples
 
 If you want to see the end result before configuring anything, start here:
-- 🇨🇳 [Email Sample (Chinese)](samples/example-output-email-zh.md)
-- 🇬🇧 [Email Sample (English)](samples/example-output-email-en.md)
-- 💬 [Chat Sample](samples/example-output-chat.md)
-- 📝 [Markdown Report Sample](samples/example-output-report.md)
-- ⚙️ [Minimal Config Sample](samples/example-config.minimal.yaml)
+- 🇨🇳 [Email Sample (Chinese)](examples/example-output-email-zh.md)
+- 🇬🇧 [Email Sample (English)](examples/example-output-email-en.md)
+- 💬 [Chat Sample](examples/example-output-chat.md)
+- 📝 [Markdown Report Sample](examples/example-output-report.md)
+- ⚙️ [Minimal Config Sample](assets/samples/example-config.minimal.yaml)
 
 (The README intentionally links to concrete sample files so users can judge tone and structure before investing time in setup. 😎)
 
@@ -165,15 +175,17 @@ Detailed compatibility notes are documented in [docs/compatibility.md](docs/comp
 ## 🍳 Starter Recipes
 
 If you do not want to design profiles from scratch, use:
-- 🏃 [Minimal Config Sample](samples/example-config.minimal.yaml): For the fastest reusable setup.
+- 🏃 [Minimal Config Sample](assets/samples/example-config.minimal.yaml): For the fastest reusable setup.
 - 👨‍🍳 [Profile Recipes](docs/profile-recipes.md): Covers advisor emails, group meeting notes, collaborator syncs, and bilingual cases.
 
 ## 📂 Repository Layout
 
 ```text
-commands/                      🚪 Claude Code command entry
-docs/                          📚 Onboarding and compatibility docs
-samples/                       🎁 Config/state examples and output samples
-skills/progress-report/        🧠 Skill instructions and references
-templates/                     🪄 Typst/LaTeX/Quarto document-export templates
+SKILL.md                                       🧠 Canonical skill entry
+agents/                                        🏷️ UI metadata
+references/                                    📖 On-demand rules and references
+assets/samples/                                ⚙️ Canonical config samples
+assets/templates/                              🪄 Typst/LaTeX/Quarto document-export templates
+examples/                                      🎁 Human-facing output samples
+docs/                                          📚 Onboarding and compatibility docs
 ```

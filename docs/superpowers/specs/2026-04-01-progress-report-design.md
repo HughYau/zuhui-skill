@@ -186,9 +186,9 @@ progress_pool:
 
 | 格式 | 状态 | 模板 |
 |------|------|------|
-| `typst` | markdown-first，返回或保存源码，支持插图 | `templates/typst/` |
-| `latex` | markdown-first，返回或保存源码，支持插图 | `templates/latex/` |
-| `quarto` | markdown-first，返回或保存源码，支持插图 | `templates/quarto/` |
+| `typst` | markdown-first，返回或保存源码，支持插图 | `assets/templates/typst/` |
+| `latex` | markdown-first，返回或保存源码，支持插图 | `assets/templates/latex/` |
+| `quarto` | markdown-first，返回或保存源码，支持插图 | `assets/templates/quarto/` |
 
 使用这些格式时先生成 markdown，再映射到模板源码，并按用户需要返回文本或保存文件。
 模板均已支持基本结构、中文注释、figure 插入位。
@@ -211,28 +211,26 @@ Typst slides 当前依赖 `@preview/touying:0.5.5`，应在面向用户的文档
 
 ```
 zuhui-skill/
-├── skills/progress-report/
-│   ├── SKILL.md
-│   └── references/
-│       ├── advisor-presets.md
-│       ├── anti-ai-zh.md
-│       ├── anti-ai-en.md
-│       ├── style-extraction.md
-│       └── artifact-scanning.md
-├── templates/
-│   ├── typst/    (report.typ, thesis-status.typ, slides.typ)
-│   ├── latex/    (report.tex, thesis-status.tex, slides.tex)
-│   └── quarto/   (report.qmd, thesis-status.qmd, slides.qmd)
-├── commands/
-│   └── progress-report.md
-├── samples/
-│   ├── example-config.yaml          # 完整配置示例
-│   ├── example-config.minimal.yaml  # 最小配置示例
-│   ├── example-state.yaml           # 状态文件示例
-│   ├── example-output-email-zh.md   # 中文邮件输出示例
-│   ├── example-output-email-en.md   # 英文邮件输出示例
-│   ├── example-output-chat.md       # 即时消息输出示例
-│   └── example-output-report.md     # Markdown report 输出示例
+├── SKILL.md
+├── references/
+│   ├── advisor-presets.md
+│   ├── anti-ai-zh.md
+│   ├── anti-ai-en.md
+│   ├── style-extraction.md
+│   └── artifact-scanning.md
+├── assets/
+│   ├── samples/
+│   │   ├── example-config.yaml
+│   │   └── example-config.minimal.yaml
+│   └── templates/
+│       ├── typst/    (report.typ, thesis-status.typ, slides.typ)
+│       ├── latex/    (report.tex, thesis-status.tex, slides.tex)
+│       └── quarto/   (report.qmd, thesis-status.qmd, slides.qmd)
+├── examples/
+│   ├── example-output-email-zh.md
+│   ├── example-output-email-en.md
+│   ├── example-output-chat.md
+│   └── example-output-report.md
 ├── docs/
 │   ├── getting-started.md
 │   ├── compatibility.md
