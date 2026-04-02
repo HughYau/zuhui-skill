@@ -1,95 +1,162 @@
 # Installation
 
-This repository works best as a project-local skill pack rather than a global install.
+这个仓库是一个分发仓库，不是单文件 skill。
 
-## Recommendation
-
-Do not install this globally by default.
-
-Put it in the project you actually want to report on, or in a dedicated workspace for one reporting context.
-
-Why project-local is better:
-- the AI can read the actual git history, figures, notebooks, and notes for that project
-- `.progress-config.yaml` and `.progress-state.yaml` stay tied to the right reporting context
-- you avoid one global skill mixing multiple labs, advisors, or projects together
-
-## Minimal Install Rule
-
-Only three things really matter:
-
-1. Keep this repo somewhere inside the project or workspace you want the AI to use.
-2. Keep `.progress-config.yaml` in that same project or workspace root.
-3. Make sure the AI reads:
-   - `commands/progress-report.md`
-   - `skills/progress-report/SKILL.md`
-
-That is the generic installation model.
-
-The exact folder name does not matter.
-
-Valid examples:
-- `./progress-report-skill/`
-- `./tools/progress-report-skill/`
-- `./.ai/skills/progress-report/`
-- `../shared/progress-report-skill/` if your tool can still read it from the current workspace
-
-## Tool-Agnostic Install Steps
-
-These steps are designed to work for Codex, Claude Code, OpenCode, and similar agent tools.
-
-1. Clone or copy this repo into the workspace where reporting should happen.
-2. Keep it local to that project or workspace.
-3. Open the project root in your AI tool, not just the skill folder by itself.
-4. Ask the AI to read:
-   - `commands/progress-report.md`
-   - `skills/progress-report/SKILL.md`
-   If the repo lives in a subfolder, use that subfolder prefix.
-5. Create `.progress-config.yaml` in the project or workspace root from:
-   - `samples/example-config.minimal.yaml`, or
-   - `samples/example-config.yaml`, or
-   - `/progress-report --init`
-6. Keep `.progress-state.yaml` in that same root so the reporting period stays local.
-
-## Codex / Claude Code / OpenCode
-
-The repo is intentionally structured so the same prompt contract can be reused across tools:
-- `commands/` defines the command entry contract
-- `skills/progress-report/SKILL.md` defines the behavior
-- `samples/` provides starter config and output examples
-- `templates/` provides Typst/LaTeX/Quarto source templates
-
-If a tool does not support native slash commands, you can still use the repo by asking the agent to read the same files and follow their instructions manually.
-
-## Copy This To Your AI
-
-Use this when you want the AI to set up the skill inside the current research project or reporting workspace.
+真正的 skill 本体始终在：
 
 ```text
-Please install the progress-report skill into this project as a project-local tool, not as a global install.
-
-Requirements:
-1. Keep the skill repo local to this project or workspace. The exact folder name is not important.
-2. Read and follow:
-   - `commands/progress-report.md`
-   - `skills/progress-report/SKILL.md`
-   If the repo is placed in a subfolder, use the correct prefixed paths.
-3. Create `.progress-config.yaml` in the project or workspace root using the minimal sample unless a richer config is clearly needed.
-4. Keep `.progress-state.yaml` in the same root.
-5. Assume this project-local install should work for Codex, Claude Code, OpenCode, and similar AI coding tools.
-6. Do not install anything globally unless I explicitly ask.
-
-After setup, tell me:
-- where the skill was placed
-- which config file was created
-- how I should trigger Quick Mode
-- how I should trigger Interactive Init
+skills/progress-report/
 ```
 
-## If You Need A Fresh Workspace
+也就是说：
+- 仓库根目录负责 README、文档、样例和命令入口
+- `skills/progress-report/` 才是需要被 AI 读取和安装的核心目录
 
-If the research project is messy or not AI-ready yet, create a fresh workspace and put this repo there together with:
-- `.progress-config.yaml`
-- `.progress-state.yaml`
-- a copy or symlink of the important `results/`, `notebooks/`, and `notes/` directories
+## Recommended: Project-Local Install
 
-That is still better than a global install because the reporting context remains isolated.
+推荐把整个仓库放进你正在汇报的研究项目里，或者放进一个专门的汇报 workspace。
+
+这样做的原因：
+- AI 可以直接读取当前项目里的 git 历史、notebook、结果图和笔记
+- `.progress-config.yaml` 和 `.progress-state.yaml` 会和正确的项目上下文绑定
+- 不同项目不会共用一套容易串味的配置
+
+### Step 1: Clone the repo locally
+
+```bash
+cd your-research-project
+git clone <this-repo-url> .progress-report-skill
+```
+
+目录名不重要，以下都可以：
+- `.progress-report-skill/`
+- `tools/progress-report-skill/`
+- `.ai/progress-report/`
+
+关键不是名字，而是仓库要留在当前项目或当前汇报 workspace 里。
+
+### Step 2: Point the AI at the right files
+
+最少需要让 AI 读取：
+
+| Path | Purpose |
+|------|---------|
+| `<repo-prefix>/skills/progress-report/SKILL.md` | Skill 主行为，必读 |
+| `<repo-prefix>/commands/progress-report.md` | 命令入口约定，推荐 |
+
+如果你使用 Claude Code 并希望通过 slash command 调用，再额外暴露：
+
+| Path | Purpose |
+|------|---------|
+| `.claude/commands/progress-report.md` | Claude Code 的项目内命令入口 |
+
+常见做法：
+
+```bash
+mkdir -p .claude/commands
+cp .progress-report-skill/.claude/commands/progress-report.md .claude/commands/progress-report.md
+```
+
+复制后，需要把命令文件里的 skill 路径改成仓库子目录中的实际位置，例如：
+
+```text
+<repo-prefix>/skills/progress-report/SKILL.md
+```
+
+如果你的仓库目录名是 `.progress-report-skill`，那这个前缀就是：
+
+```text
+.progress-report-skill
+```
+
+如果仓库目录名不同，把 `<repo-prefix>` 替换成实际目录名即可。
+
+### Step 3: Create project-root config files
+
+配置和状态文件应放在当前项目或当前汇报 workspace 的根目录，而不是 skill 目录里。
+
+初始化配置的推荐起点：
+
+```bash
+cp .progress-report-skill/skills/progress-report/assets/samples/example-config.minimal.yaml .progress-config.yaml
+```
+
+`.progress-state.yaml` 可以：
+- 首次手动创建空文件
+- 或让 skill 在第一次确认输出可用后自动创建/更新
+
+### Step 4: First run
+
+最快体验路径：
+
+```text
+/progress-report --quick
+```
+
+如果你想让系统通过对话生成配置：
+
+```text
+/progress-report --init
+```
+
+## Optional: Global Install
+
+只有在你明确想要“一次安装，多项目共用”时，才考虑全局安装。
+
+全局安装时也不要把 `SKILL.md` 搬到仓库根目录；仍然只安装或引用这个目录：
+
+```text
+skills/progress-report/
+```
+
+建议做法：
+- 把仓库克隆到一个固定位置
+- 将 `skills/progress-report/` 复制或软链接到你的个人 skill 目录
+- 仍然把 `.progress-config.yaml` 和 `.progress-state.yaml` 放在具体项目根目录
+
+全局安装的风险：
+- 容易让不同项目共用一套 profile 和 state
+- AI 不一定处在你真正想扫描的研究上下文中
+- 对首次使用者来说，理解成本更高
+
+因此全局安装是兼容选项，不是默认推荐路径。
+
+## What the AI May Load On Demand
+
+在 `skills/progress-report/` 内，常见按需读取内容如下：
+
+| Path | Purpose |
+|------|---------|
+| `skills/progress-report/references/advisor-presets.md` | 导师/对象偏好规则 |
+| `skills/progress-report/references/anti-ai-zh.md` | 中文去 AI 化规则 |
+| `skills/progress-report/references/anti-ai-en.md` | 英文去 AI 化规则 |
+| `skills/progress-report/references/artifact-scanning.md` | artifact 扫描规则 |
+| `skills/progress-report/references/style-extraction.md` | 风格样本提取 |
+| `skills/progress-report/references/profile-recipes.md` | profile 配方 |
+| `skills/progress-report/assets/samples/example-config.minimal.yaml` | 极简配置样例 |
+| `skills/progress-report/assets/templates/` | Typst/LaTeX/Quarto 模板 |
+
+## Repository Layout
+
+```text
+.claude/commands/              Claude Code 项目内命令入口
+commands/                      通用命令入口文档
+docs/                          使用说明和兼容性文档
+samples/                       用户浏览用样例
+skills/progress-report/        真正的 skill 本体
+  ├── SKILL.md
+  ├── references/
+  └── assets/
+```
+
+## Compatibility
+
+适配思路如下：
+- **Claude Code**：优先项目内安装，必要时复制 `.claude/commands/progress-report.md`
+- **Codex / OpenCode**：直接读取 `skills/progress-report/SKILL.md`
+- **其他可读文件的 AI agent**：显式要求其读取 `skills/progress-report/SKILL.md` 并遵循
+
+关键点不变：
+- skill 本体不在仓库根目录
+- 配置和状态不放进 skill 目录
+- 项目内安装优先于全局安装

@@ -1,0 +1,47 @@
+# .progress-config.yaml
+# Minimal starter version for first-time users.
+# Use this when you want one reusable profile without learning the full config yet.
+
+language: zh
+tone: neutral
+vocabulary:
+  - concept: "ablation study"
+    preferred: "控制变量"
+
+profiles:
+  weekly-email:
+    audience: "张老师"
+    advisor_preset: detail-oriented
+    format: email
+    layout: report
+    verbosity: standard
+    language: zh
+    tone: neutral
+    signature:
+      name: ""
+      closing: "祝好"
+
+default_profile: weekly-email
+
+style:
+  sample_files: []
+  style_summary: null
+
+repos:
+  - path: .
+
+artifacts:
+  scan_dirs:
+    - results/
+    - notebooks/
+    - notes/
+    # Intentionally minimal: add data/ only if generated tables or processed outputs are a real reporting source.
+  file_patterns:
+    - "*.png"
+    - "*.ipynb"
+    - "*.md"
+
+render:
+  enabled: auto
+  format: markdown
+  template: classic-report
