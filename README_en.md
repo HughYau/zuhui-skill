@@ -23,6 +23,18 @@ Every generated output keeps four things crystal clear:
 🚧 **Blockers**: Where you are currently stuck or facing difficulties.
 👣 **Next steps**: What you plan to do next.
 
+## 🎭 Personalized Advisor Personas
+
+Different advisors focus on different aspects of research progress. You can configure "advisor personas" to automatically adjust the granularity, focus, and tone of your reports:
+
+- 🦅 **Hands-off (`hands-off`)**: Focuses on conclusions and macro-level progress. Automatically extracts core outputs and omits lengthy experimental parameters to keep it concise.
+- 🕵️ **Detail-oriented (`detail-oriented`)**: Focuses on rigor and detail. Detailed presentation of experimental setups, comparative data chains, parameter choices, and reasoning for failed attempts.
+- 🔭 **High-level (`high-level`)**: Focuses on the big picture. Downplays operational details and emphasizes the academic significance, core insights, and overall direction of your progress.
+- 💡 **Intuitive (`intuitive`)**: Focuses on intuitive understanding of concepts. Uses vivid analogies to explain complex algorithms or phenomena, lowering the communication barrier.
+- 🛠️ **Fully Customizable**: Beyond built-in presets, you can easily tailor your very own reporting style through specific instructions in the configuration file.
+
+Say goodbye to generic AI boilerplate and communicate efficiently using the language that best fits their mindset. ✨
+
 ## 🤔 Why this repo exists
 
 This skill is designed to solve three practical problems:
