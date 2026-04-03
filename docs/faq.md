@@ -5,7 +5,7 @@
 Yes. Start with:
 
 ```text
-/progress-report --quick
+/zuhui --quick
 ```
 
 That is the intended first-run path when you want the lowest setup cost.
@@ -13,7 +13,7 @@ That is the intended first-run path when you want the lowest setup cost.
 If you already know you want a reusable setup, use:
 
 ```text
-/progress-report --init
+/zuhui --init
 ```
 
 That path asks a few onboarding questions and generates `.progress-config.yaml` for you.

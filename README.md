@@ -1,10 +1,10 @@
-# 🧑‍🔬 组会 Skill (Progress Report)
+# 🧑‍🔬 组会Skill
 
 > 生成真正可用的科研进度汇报：无论你是急需发送简报，还是需要结构化的每周例行汇报，都能轻松搞定。✨
 > 
 > *[Read this in English](./README_en.md)* 🌍
 
-`组会 Skill` (Progress Report) 是一个专为研究生和科研人员打造的 Claude Code 技能。它可以帮助你高效地向导师、实验室会议和合作者进行汇报，让你无需每周从头开始撰写重复的更新。🎓
+组会skill`zuhui` 是一个专为研究生和科研人员打造的skill。它可以帮助你高效地向导师、实验室会议和合作者进行汇报，让你无需每周从头开始撰写重复的更新。🎓
 
 ## 🎯 支持的输出格式
 
@@ -33,7 +33,7 @@
 当你需要立刻发送一份汇报时，请使用极速模式。🚀
 
 ```bash
-/progress-report --quick
+/zuhui --quick
 ```
 
 极速模式只需你回答三个核心问题：
@@ -46,7 +46,7 @@
 如果你已经确定要长期复用，但不想手写 YAML，可以直接运行：
 
 ```bash
-/progress-report --init
+/zuhui --init
 ```
 
 这个路径会通过 5-7 个 onboarding 问题，自动生成适合你场景的 `.progress-config.yaml`。
@@ -56,8 +56,8 @@
 当你需要可重复的周报工作流，并希望结合个人 Profile、项目产物扫描和时间周期追踪时，请使用完全体模式。📅
 
 ```bash
-/progress-report --profile weekly-email
-/progress-report --format chat --since "last monday"
+/zuhui --profile weekly-email
+/zuhui --format chat --since "last monday"
 ```
 
 完全体模式依赖以下配置文件：
@@ -72,8 +72,8 @@
 ## 🚀 首次使用指南 (First Run)
 
 1. 不要优先全局安装，建议把这个 skill 放进你要汇报的研究项目里，或者单独新建一个汇报 workspace。
-2. 如果想快速体验，建议从 `/progress-report --quick` 开始。🌊
-3. 如果你想直接让系统帮你生成配置，运行 `/progress-report --init`。
+2. 如果想快速体验，建议从 `/zuhui --quick` 开始。🌊
+3. 如果你想直接让系统帮你生成配置，运行 `/zuhui --init`。
 4. 当你需要可复用的模板和时间范围追踪时，切换到完全体模式 (Full Mode)。
 5. 准备好自定义配置时，可以复制并修改示例文件：
    - 📄 `assets/samples/example-config.yaml`
@@ -92,14 +92,20 @@
 
 推荐方式是**项目内安装**，不是全局安装。
 
-现在这个仓库的**根目录本身就是 skill 根目录**，最简单的安装方式就是直接 clone 到项目的 `clients/skills/` 下面，例如：
+现在这个仓库的**根目录本身就是 skill 根目录**，最简单的安装方式就是直接 clone 到项目本地 skills 目录，例如：
 
 ```bash
-git clone <this-repo-url> clients/skills/progress-report
+git clone https://github.com/HughYau/zuhui-skill.git .agents/skills/zuhui-skill
+```
+
+如果你用的是 Claude Code，也可以放到：
+
+```bash
+git clone https://github.com/HughYau/zuhui-skill.git .claude/skills/zuhui-skill
 ```
 
 最小可用安装只需要三步：
-1. 把整个仓库 clone 到当前项目的 `clients/skills/<skill-name>/`，或其他等价的项目内 skills 目录。
+1. 把整个仓库 clone 到当前项目的 `.agents/skills/zuhui-skill`，或其他等价的项目内 skills 目录。
 2. 把 `.progress-config.yaml` 和 `.progress-state.yaml` 放在该项目或 workspace 根目录。
 3. 让 AI 至少读取：
    - `SKILL.md`
@@ -119,24 +125,13 @@ git clone <this-repo-url> clients/skills/progress-report
 如果你希望直接把安装工作交给 AI，可以把下面这段原样复制给它：
 
 ```text
-请把 progress-report skill 安装到当前项目里，按项目级工具处理，不要做全局安装。
+请把 `zuhui` 安装到当前项目里，不要做全局安装。
 
-要求：
-1. 将 skill 保持为当前项目或当前 workspace 的本地工具，不要做全局安装，目录名不重要。
-2. 读取并遵循：
-   - `SKILL.md`
-   - 如有需要，再按需读取 `references/` 和 `assets/`
-   如果仓库被放在子目录里，请使用带前缀的正确路径。
-3. 在项目或 workspace 根目录创建 `.progress-config.yaml`，默认优先使用 `assets/samples/example-config.minimal.yaml`，除非当前项目明显需要完整配置。
-4. 将 `.progress-state.yaml` 也放在同一个根目录。
-5. 这套安装方式需要兼容 Codex、Claude Code、OpenCode 以及类似的 AI 工具。
-6. 除非我明确要求，否则不要全局安装。
-
-安装完成后，请告诉我：
-- skill 被放在了哪里
-- 创建了哪个配置文件
-- 如何触发 Quick Mode
-- 如何触发 Interactive Init
+1. 把仓库 clone 到 `.agents/skills/zuhui-skill`；如果当前环境更适合 Claude Code，也可以用 `.claude/skills/zuhui-skill`。
+2. 读取并遵循这个 skill 目录里的 `SKILL.md`。
+3. 在项目根目录创建 `.progress-config.yaml`，默认基于 `assets/samples/example-config.minimal.yaml`。
+4. `.progress-state.yaml` 放在同一个项目根目录。
+5. 安装完成后告诉我：skill 放在哪里、创建了哪些文件、如何使用 `/zuhui --quick` 和 `/zuhui --init`。
 ```
 
 ## 👀 汇报示例 (Samples)

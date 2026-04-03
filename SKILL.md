@@ -1,9 +1,9 @@
 ---
-name: progress-report
+name: zuhui
 description: Use when preparing research progress updates, advisor emails, lab meeting notes, or collaborator syncs from scattered evidence such as git history, notebooks, figures, and notes, especially when the output must adapt to audience, tone, and Chinese/English workflow.
 ---
 
-# Progress Report
+# Zuhui
 
 ## Overview
 
@@ -28,7 +28,7 @@ description: Use when preparing research progress updates, advisor emails, lab m
 ## Quick Reference
 
 ```text
-/progress-report [options]
+/zuhui [options]
   --quick
   --init
   --profile <name>

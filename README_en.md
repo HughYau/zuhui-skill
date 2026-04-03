@@ -1,10 +1,10 @@
-# 🧑‍🔬 Zuhui Skill (Progress Report)
+# 🧑‍🔬 zuhui Skill
 
 > Generate research progress updates that are actually usable: quick when you are in a rush, structured when you need repeatable weekly reporting. ✨
 > 
 > *[阅读中文版本 (Read this in Chinese)](./README.md)* 🇨🇳
 
-`Zuhui Skill` (formerly `progress-report`) is a Claude Code skill for grad students and researchers who need to report to advisors, lab meetings, and collaborators without rewriting the same update from scratch every week. 🎓
+`zuhui` is a lightweight reporting skill for grad students and researchers who need to report to advisors, lab meetings, and collaborators without rewriting the same update from scratch every week. 🎓
 
 It is better understood now as a **project-local reporting skill pack**: Claude Code can use it, Codex can use it, and OpenCode or other AI tools that can read project files can use it too.
 
@@ -35,7 +35,7 @@ This skill is designed to solve three practical problems:
 Use Quick Mode when you need a sendable update immediately. 🚀
 
 ```bash
-/progress-report --quick
+/zuhui --quick
 ```
 
 Quick Mode asks only three core questions:
@@ -48,7 +48,7 @@ It skips complex configurations and produces a directly editable draft with defa
 If you already know you want a reusable setup but do not want to hand-write YAML, run:
 
 ```bash
-/progress-report --init
+/zuhui --init
 ```
 
 That path asks a few onboarding questions and generates `.progress-config.yaml` for you.
@@ -58,8 +58,8 @@ That path asks a few onboarding questions and generates `.progress-config.yaml` 
 Use Full Mode when you want repeatable weekly reporting with profiles, artifact scanning, and period tracking. 📅
 
 ```bash
-/progress-report --profile weekly-email
-/progress-report --format chat --since "last monday"
+/zuhui --profile weekly-email
+/zuhui --format chat --since "last monday"
 ```
 
 Full Mode is equipped with:
@@ -81,8 +81,8 @@ The core of this skill is not "helping you write more like an AI," but **making 
 ## 🚀 First Run
 
 1. Do not default to a global install. Put this skill inside the research project you want to report on, or create a dedicated reporting workspace.
-2. For the lowest-friction path, test the waters with `/progress-report --quick`. 🌊
-3. If you want the skill to create the config for you, run `/progress-report --init`.
+2. For the lowest-friction path, test the waters with `/zuhui --quick`. 🌊
+3. If you want the skill to create the config for you, run `/zuhui --init`.
 4. Switch to Full Mode when you are ready for reusable templates and time tracking.
 5. When customizing your workflow, copy and modify the sample config files:
    - 📄 `assets/samples/example-config.yaml`
@@ -101,14 +101,20 @@ For a fuller walkthrough, see:
 
 The preferred setup is **project-local**, not global.
 
-This repository's **root directory is now the skill root**. The simplest install is to clone it directly into a project's `clients/skills/` directory, for example:
+This repository's **root directory is now the skill root**. The simplest install is to clone it directly into a project's local skills directory, for example:
 
 ```bash
-git clone <this-repo-url> clients/skills/progress-report
+git clone https://github.com/HughYau/zuhui-skill.git .agents/skills/zuhui-skill
+```
+
+If you are using Claude Code, this is also fine:
+
+```bash
+git clone https://github.com/HughYau/zuhui-skill.git .claude/skills/zuhui-skill
 ```
 
 The minimum viable install only needs three things:
-1. Clone this repo into `clients/skills/<skill-name>/` or an equivalent project-local skills directory.
+1. Clone this repo into `.agents/skills/zuhui-skill` or an equivalent project-local skills directory.
 2. Keep `.progress-config.yaml` and `.progress-state.yaml` in the project or workspace root.
 3. Make sure the AI reads at least:
    - `SKILL.md`
@@ -128,24 +134,14 @@ See [docs/installation.md](docs/installation.md) for the full version.
 If you want an AI agent to install the skill for you, copy this block as-is:
 
 ```text
-Please install the progress-report skill into this project as a project-local tool, not as a global install.
+Please install `zuhui` into this project and keep it project-local, not global.
 
-Requirements:
-1. Keep the skill repo local to this project or workspace. The exact folder name is not important.
-2. Read and follow:
-   - `SKILL.md`
-   - and load `references/` or `assets/` only if needed
-   If the repo is placed in a subfolder, use the correct prefixed paths.
-3. Create `.progress-config.yaml` in the project or workspace root using `assets/samples/example-config.minimal.yaml` unless a richer config is clearly needed.
-4. Keep `.progress-state.yaml` in the same root.
-5. Assume this project-local install should work for Codex, Claude Code, OpenCode, and similar AI coding tools.
-6. Do not install anything globally unless I explicitly ask.
-
-After setup, tell me:
-- where the skill was placed
-- which config file was created
-- how I should trigger Quick Mode
-- how I should trigger Interactive Init
+Keep it simple:
+1. Clone the repo into `.agents/skills/zuhui-skill`; if this environment is better suited for Claude Code, `.claude/skills/zuhui-skill` is also fine.
+2. Read and follow `SKILL.md` from that skill directory.
+3. Create `.progress-config.yaml` in the project root, using `assets/samples/example-config.minimal.yaml` by default.
+4. Keep `.progress-state.yaml` in the same project root.
+5. After setup, tell me where the skill was installed, which files were created, and how to run `/zuhui --quick` and `/zuhui --init`.
 ```
 
 ## 👀 Samples

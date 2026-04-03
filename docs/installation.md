@@ -8,15 +8,22 @@
 - `examples/` 是给人快速预览输出效果的示例目录。
 - `docs/` 是仓库说明文档，不是安装 skill 时的主入口。
 
-## Recommended: Clone into `clients/skills/`
+## Recommended: Clone into a local skills directory
 
 默认推荐项目内安装，而不是全局安装。
 
-最简单的方式就是把整个仓库 clone 到当前项目的 `clients/skills/` 下面：
+最简单的方式就是把整个仓库 clone 到当前项目本地 skills 目录：
 
 ```bash
 cd your-project
-git clone <this-repo-url> clients/skills/progress-report
+git clone https://github.com/HughYau/zuhui-skill.git .agents/skills/zuhui-skill
+```
+
+如果你用的是 Claude Code，也可以放到：
+
+```bash
+cd your-project
+git clone https://github.com/HughYau/zuhui-skill.git .claude/skills/zuhui-skill
 ```
 
 如果你的项目用的是其他本地 skills 目录，也可以放在等价位置；关键点是：
@@ -50,7 +57,7 @@ git clone <this-repo-url> clients/skills/progress-report
 推荐从最小配置样例开始：
 
 ```bash
-cp clients/skills/progress-report/assets/samples/example-config.minimal.yaml .progress-config.yaml
+cp .agents/skills/zuhui-skill/assets/samples/example-config.minimal.yaml .progress-config.yaml
 ```
 
 `.progress-state.yaml` 可以：
@@ -60,7 +67,7 @@ cp clients/skills/progress-report/assets/samples/example-config.minimal.yaml .pr
 如果你更想让 AI 通过对话帮你建配置，直接运行：
 
 ```text
-/progress-report --init
+/zuhui --init
 ```
 
 ## First Run
@@ -68,13 +75,13 @@ cp clients/skills/progress-report/assets/samples/example-config.minimal.yaml .pr
 最快体验路径：
 
 ```text
-/progress-report --quick
+/zuhui --quick
 ```
 
 如果你已经准备做可复用配置，优先走：
 
 ```text
-/progress-report --init
+/zuhui --init
 ```
 
 ## Optional: Personal or Global Install
@@ -84,7 +91,7 @@ cp clients/skills/progress-report/assets/samples/example-config.minimal.yaml .pr
 即便如此，也仍然建议保留整个 skill 根目录结构，而不是只拷贝单个文件：
 
 ```text
-progress-report/
+zuhui-skill/
 ├── SKILL.md
 ├── agents/
 ├── assets/

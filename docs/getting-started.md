@@ -1,6 +1,6 @@
 # Getting Started
 
-This guide is for the first 10 minutes with `progress-report`.
+This guide is for the first 10 minutes with `zuhui`.
 
 Before anything else: keep this skill project-local when possible.
 
@@ -19,7 +19,7 @@ Use Interactive Init if:
 Run:
 
 ```text
-/progress-report --init
+/zuhui --init
 ```
 
 Use Quick Mode if:
@@ -38,7 +38,7 @@ Use Full Mode if:
 Run:
 
 ```text
-/progress-report --quick
+/zuhui --quick
 ```
 
 You will only be asked:
@@ -52,7 +52,7 @@ This path is the lowest-friction option and is the recommended default for new u
 
 When Quick Mode proves useful, create reusable project-local files:
 
-1. Either run `/progress-report --init` or copy `../assets/samples/example-config.yaml` to `.progress-config.yaml`.
+1. Either run `/zuhui --init` or copy `../assets/samples/example-config.yaml` to `.progress-config.yaml`.
 2. Adjust the profiles you actually need.
 3. Set `tone`, `vocabulary`, and `render` before you over-customize style learning.
 4. Let the skill create or update `.progress-state.yaml` after a confirmed run.
